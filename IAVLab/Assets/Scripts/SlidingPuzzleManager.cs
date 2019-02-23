@@ -34,7 +34,7 @@ namespace UCM.IAV.Puzzles {
 
         // El tablero de bloques (prefab or not)
         public BlockBoard board;
-                     
+		public TankBehaviour tank;            
         public GameObject infoPanel;
         public Text timeNumber;
         public Text stepsNumber;
@@ -56,7 +56,7 @@ namespace UCM.IAV.Puzzles {
         private System.Random random;
 
         // Se llama antes de dibujar el primero frame y es donde pasamos información entre los distintos objetos que se han despertado
-        void Start() {
+        void Awake() {
             //Podría lanzar excepciones si no ha sido inicializado con gameobjects en todos sus campos clave (salvo que toque cargar la info de fichero o algo así...)
 
             random = new System.Random();
@@ -87,6 +87,9 @@ namespace UCM.IAV.Puzzles {
 
             // Inicializar todo el tablero de bloques
             board.Initialize(this, puzzle);
+
+			//Inicializar tanque
+			tank.Initialize(board);
 
             CleanInfo();
 
@@ -209,6 +212,10 @@ namespace UCM.IAV.Puzzles {
         //...las métricas pintarlas pintar por la pantalla o en fichero
         Debug.Log("Métrics: " + metrics.ToString()); // hacer bucle para mostrarlas todas
         }
+
+		public TankBehaviour getTank(){
+			return tank;
+		}
 
         public void SolvePuzzleByBFS() {
 

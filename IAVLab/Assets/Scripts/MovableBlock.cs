@@ -21,7 +21,7 @@ namespace UCM.IAV.Puzzles {
     public class MovableBlock : MonoBehaviour {
 
         // El tablero de bloques al que notifica
-		enum TipoCasilla {L, A, B, R}
+		public enum TipoCasilla {L, A, B, R}
 		private double[] valores = new double[] {1, 2, 4, 1e9};
         private BlockBoard board;
 		private TipoCasilla type = TipoCasilla.L; //por defecto
@@ -59,6 +59,11 @@ namespace UCM.IAV.Puzzles {
 			}
 		}
 
+		private void changeText(){
+			if (GetComponentInChildren<TextMesh>() != null)
+				this.GetComponentInChildren<TextMesh>().text = type.ToString();
+		}
+
         // Inicializa con el tablero de bloques y el texto (siempre que haya hijo con componente TextMesh), sólo si todavía no tiene puesto ningún tablero de bloques  
         // El tablero de bloques recibido no puede ser nulo, pero el texto sí (representa un bloque no visible)
         public void Initialize(BlockBoard board, uint value) {
@@ -71,8 +76,7 @@ namespace UCM.IAV.Puzzles {
 			type = (TipoCasilla)value;
 			valor = valores [value];
 
-			if (GetComponentInChildren<TextMesh>() != null)
-				this.GetComponentInChildren<TextMesh>().text = type.ToString();
+			changeText();
 
 			changeColor();
 
@@ -95,7 +99,25 @@ namespace UCM.IAV.Puzzles {
         // Podría reaccionarse con un sonido si el intento falla, aunque ahora no se hace nada
         // La he puesto pública para que se puedan simular pulsaciones sobre un bloque desde el gestor
         public bool OnMouseUpAsButton() {
-            if (board == null) throw new InvalidOperationException("This object has not been initialized");
+			if (board.getManager ().getTank ().isClicked ()) {
+				//IA
+				Debug.Log ("IA TIME");
+				return true;
+			}
+			else {
+				//Cambio de tipo
+				if (this.type == TipoCasilla.R) {
+					this.type = TipoCasilla.L;
+				} else{
+					this.type++;
+				}
+
+				changeColor();
+				changeText();
+				return false;
+			}
+
+            /*if (board == null) throw new InvalidOperationException("This object has not been initialized");
 
             Debug.Log("Trying to move " + ToString() + "...");
             if (board.CanMove(this)) {
@@ -108,12 +130,16 @@ namespace UCM.IAV.Puzzles {
             }
 
             Debug.Log(ToString() + " cannot be moved.");
-            return false;
+            return false;*/
         }
 
         // Cadena de texto representativa
         public override string ToString() {
             return "Block[" + this.GetComponentInChildren<TextMesh>()?.text.ToString() + "] at " + position;
         }
+
+		public TipoCasilla getType(){
+			return type;
+		}
     }
 }

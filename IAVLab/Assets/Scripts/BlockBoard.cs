@@ -200,6 +200,10 @@ namespace UCM.IAV.Puzzles {
             manager.CleanInfo();
         }
 
+		public SlidingPuzzleManager getManager(){
+			return this.manager;
+		}
+
         // Devuelve un bloque situado en la matriz de bloques
         // Si no uso Position habría menos seguridad en el acceso (pero podría trabajar con una tupla de dos parámetros también como permite la sintaxis de C# 7)
         public MovableBlock GetBlock(Position position) {
@@ -212,5 +216,14 @@ namespace UCM.IAV.Puzzles {
         public override string ToString() {
             return "Board{" + blocks.ToString() + "}";
         }
+
+		public int getWidth(){
+			return blocks.GetLength(0);
+		}
+
+		public int getHeight(){
+			return blocks.GetLength(1);
+		}
+
     }
 }
