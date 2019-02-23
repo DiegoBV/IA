@@ -21,8 +21,8 @@ namespace UCM.IAV.Puzzles {
     public class MovableBlock : MonoBehaviour {
 
         // El tablero de bloques al que notifica
-		public enum TipoCasilla {L, A, B, R}
-		private double[] valores = new double[] {1, 2, 4, 1e9};
+		public enum TipoCasilla {L, A, B, R,F}
+		private double[] valores = new double[] {1, 2, 4, 1e9, 1};
         private BlockBoard board;
 		private TipoCasilla type = TipoCasilla.L; //por defecto
 		private double valor = 0;
@@ -52,6 +52,11 @@ namespace UCM.IAV.Puzzles {
 				if (rend != null) {
 					rend.material.SetColor ("_Color", new Color(0.27f, 0.14f, 0.1f, 1f));
 				}
+                    break;
+            case TipoCasilla.F:
+				if (rend != null) {
+					rend.material.SetColor ("_Color", Color.magenta);
+				}
 				break;
 			default:
 				Debug.Log ("Error, tipo no valido");
@@ -74,6 +79,7 @@ namespace UCM.IAV.Puzzles {
 
 
 			type = (TipoCasilla)value;
+            if (value == 5) print("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 			valor = valores [value];
 
 			changeText();
@@ -106,11 +112,14 @@ namespace UCM.IAV.Puzzles {
 			}
 			else {
 				//Cambio de tipo
-				if (this.type == TipoCasilla.R) {
-					this.type = TipoCasilla.L;
-				} else{
-					this.type++;
-				}
+                if(this.type != TipoCasilla.F)
+                {
+				    if (this.type == TipoCasilla.R) {
+					    this.type = TipoCasilla.L;
+				    } else{
+					    this.type++;
+				    }
+                }
 
 				changeColor();
 				changeText();

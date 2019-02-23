@@ -109,7 +109,10 @@ namespace UCM.IAV.Puzzles.Model {
 					
 					matrix [r, c] = (uint)rnd.Next(0, 4);
                 }
-        }
+
+            matrix[rnd.Next(0, (int)rows), rnd.Next(0, (int)columns)] = 4;
+
+    }
 
         // Devuelve el que se considera valor inicial por defecto de una posición
         private uint GetDefaultValue(uint row, uint column) {

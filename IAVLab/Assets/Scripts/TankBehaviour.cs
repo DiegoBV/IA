@@ -25,7 +25,7 @@ public class TankBehaviour : MonoBehaviour {
 			uint y = (uint)rnd.Next(0, h);
 
 			block_ = tablero.GetBlock(new Position(x, y));
-		}while(block_.getType() == MovableBlock.TipoCasilla.R);
+		}while(block_.getType() == MovableBlock.TipoCasilla.R || block_.getType() == MovableBlock.TipoCasilla.F);
 			
 		this.transform.position = new Vector3 (block_.transform.position.x, this.transform.position.y, block_.transform.position.z);
 	}
