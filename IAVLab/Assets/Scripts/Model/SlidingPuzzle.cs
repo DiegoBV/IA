@@ -44,6 +44,11 @@ namespace UCM.IAV.Puzzles.Model {
         public SlidingPuzzle() : this(DEFAULT_ROWS, DEFAULT_COLUMNS) {
         }
 
+        public void setMatrix(uint[,] newMatrix)
+        {
+            matrix = (uint[,])newMatrix.Clone();
+        }
+
         // Construye la matriz de dimensiones (rows) por (columns)
         // Como mínimo el puzle debe ser de 1x1
         public SlidingPuzzle(uint rows, uint columns) {

@@ -16,11 +16,13 @@ namespace UCM.IAV.Puzzles {
     using UnityEngine.UI;
     using Model; 
     using Model.AI;
-
+  
     // Esto es para usar la IA
     using UCM.IAV.IA;
     using UCM.IAV.IA.Search;
-    using UCM.IAV.IA.Search.Uninformed; 
+    using UCM.IAV.IA.Search.Uninformed;
+    using UnityEditor;
+    using System.IO;
 
     /* 
      * Gestor de la escena que actúa como controlador entre la vista (objetos de la escena de Unity) y el modelo (lógica del puzle deslizante).
@@ -40,6 +42,9 @@ namespace UCM.IAV.Puzzles {
         public Text stepsNumber;
         public InputField rowsInput;
         public InputField columnsInput;
+
+        //SaveScene
+        public TextAsset presetMap;
 
         // Dimensiones iniciales del puzle (3x3 en caso de que el diseñador no especifique nada en el Inspector)
         public uint rows = 3;
@@ -95,6 +100,8 @@ namespace UCM.IAV.Puzzles {
 
             // Podríamos asumir que tras cada inicialización o reinicio, el puzle está ordenado y se puede mostrar todo el panel de información
             UpdateInfo();
+
+            
 
         }
 
@@ -250,7 +257,52 @@ namespace UCM.IAV.Puzzles {
         public override string ToString() {
             return "Manager of " + board.ToString() + " over " + puzzle.ToString();
         }
+
+        public void loadMap()
+        {
+            string path = "Assets/MAPPP.txt";
+
+            StreamReader mapFile = new StreamReader(path);
+
+            String input = mapFile.ReadToEnd();
+
+            int i = 0, j = 0;
+            uint[,] result = new uint[3, 3];
+            foreach (var row in input.Split('\n'))
+            {
+                j = 0;
+                foreach (var col in row.Trim().Split(' '))
+                {
+
+                        result[i, j] = uint.Parse(col.Trim());
+                        j++;
+
+                }
+                i++;
+            }
+            /*
+            for(int k = 0; k < 3; k++)
+            {
+                for (int l = 0; l < 3; l++)
+                {
+                    print(result[k, l]);
+                }
+            }
+            print(result);**/
+            puzzle.columns = puzzle.rows = 3;
+            puzzle.setMatrix(result);
+            board.Initialize(this, puzzle);
+
+            //Inicializar tanque
+            tank.Initialize(board);
+            CleanInfo();
+            UpdateInfo();
+
+            mapFile.Close();
+        }
+
     }
 }
+
 
     
