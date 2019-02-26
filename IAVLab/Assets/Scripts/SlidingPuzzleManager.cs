@@ -264,32 +264,22 @@ namespace UCM.IAV.Puzzles {
 
             StreamReader mapFile = new StreamReader(path);
 
-            String input = mapFile.ReadToEnd();
+			string line = mapFile.ReadLine();
+			string[] split = line.Split(' ');
+			uint rows = (uint)Int32.Parse(split[0]);
+			uint cols = (uint)Int32.Parse(split[1]);
+			uint[,] result = new uint[rows, cols];
 
-            int i = 0, j = 0;
-            uint[,] result = new uint[3, 3];
-            foreach (var row in input.Split('\n'))
-            {
-                j = 0;
-                foreach (var col in row.Trim().Split(' '))
-                {
-
-                        result[i, j] = uint.Parse(col.Trim());
-                        j++;
-
-                }
-                i++;
-            }
-            /*
-            for(int k = 0; k < 3; k++)
-            {
-                for (int l = 0; l < 3; l++)
-                {
-                    print(result[k, l]);
-                }
-            }
-            print(result);**/
-            puzzle.columns = puzzle.rows = 3;
+			for(int i = 0; i < rows; i++){
+				line = mapFile.ReadLine();
+				split = line.Split(' ');
+				for(int j = 0; j < cols; j++){
+					result[i, j] = (uint)Int32.Parse(split[j]);
+				}
+			}
+            
+			puzzle.rows = rows;
+			puzzle.columns = cols;
             puzzle.setMatrix(result);
             board.Initialize(this, puzzle);
 
