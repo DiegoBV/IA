@@ -12,6 +12,9 @@ namespace UCM.IAV.Puzzles.Model {
 
     using System;
     using UCM.IAV.Util;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Linq;
 
     /*
      * El modelo lógico del puzle deslizante, internamente guarda los datos en una matriz.
@@ -19,10 +22,26 @@ namespace UCM.IAV.Puzzles.Model {
      */
     public class SlidingPuzzle : IDeepCloneable<SlidingPuzzle>{
 
+		public class Node
+		{
+			public Node Parent;
+			public Tuple<uint, uint> Position;
+			public double Cost;
+
+			public Node(Tuple<uint, uint> pos, double cost)
+			{
+				Parent = null;
+				Position = pos;
+				Cost = cost;
+			}
+		}
+
         // Dimensión de las filas
         public uint rows;
         // Dimensión de las columnas
         public uint columns;
+
+		private double[] valores = new double[] {1, 2, 4, 1e9, 1};
 
         // La matriz de valores (enteros sin signo) 
         // Podría definirse como tipo genérico, SlidingPuzzle<E> para contener otro tipo de valores.
@@ -57,6 +76,86 @@ namespace UCM.IAV.Puzzles.Model {
 
             this.Initialize(rows, columns);
         }
+
+		public Stack<Node> FindPath(Node Start, Node End)
+		{
+			Node start = Start;
+			Node end = End;
+
+			Stack<Node> Path = new Stack<Node>();
+			List<Node> OpenList = new List<Node>();
+			List<Node> ClosedList = new List<Node>();
+			List<Node> adjacencies;
+			Node current = start;
+
+			// add start node to Open List
+			OpenList.Add(start);
+
+			while(OpenList.Count != 0 && !ClosedList.Exists(x => x.Position == end.Position))
+			{
+				current = OpenList[0];
+				OpenList.Remove(current);
+				ClosedList.Add(current);
+				adjacencies = GetAdjacentNodes(current);
+
+
+				foreach(Node n in adjacencies)
+				{
+					if (!ClosedList.Contains(n) && valores[matrix[n.Position.Item1, n.Position.Item2]] != valores[2])
+					{
+						if (!OpenList.Contains(n))
+						{
+							n.Parent = current;
+							n.Cost = 1 + n.Parent.Cost; //no ta ok por ahora
+							OpenList.Add(n);
+							OpenList = OpenList.OrderBy(node => valores[matrix[node.Position.Item1, node.Position.Item2]]).ToList<Node>();
+						}
+					}
+				}
+			}
+
+			// construct path, if end was not closed return null
+			if(!ClosedList.Exists(x => x.Position == end.Position))
+			{
+				return null;
+			}
+
+			// if all good, return path
+			Node temp = ClosedList[ClosedList.IndexOf(current)];
+			while(temp.Parent != start && temp != null)
+			{
+				Path.Push(temp);
+				temp = temp.Parent;
+			}
+			return Path;
+		}
+
+		private List<Node> GetAdjacentNodes(Node n) //ME HE HECHO LIO CON LOS INDICES EQUISDE
+		{
+			List<Node> temp = new List<Node>();
+
+			uint row = n.Position.Item2;
+			uint col = n.Position.Item1;
+
+			if(row + 1 < rows)
+			{
+				temp.Add(new Node(new Tuple<uint, uint>(row + 1, col), valores[matrix[row + 1, col]]));
+			}
+			if(row - 1 >= 0)
+			{
+				temp.Add(new Node(new Tuple<uint, uint>(row - 1, col), valores[matrix[row - 1, col]]));
+			}
+			if(col - 1 >= 0)
+			{
+				temp.Add(new Node(new Tuple<uint, uint>(row, col - 1), valores[matrix[row ,col - 1]]));
+			}
+			if(col + 1 < columns)
+			{
+				temp.Add(new Node(new Tuple<uint, uint>(row, col + 1), valores[matrix[row, col + 1]]));
+			}
+
+			return temp;
+		}
 
         // Constructor de copia, en realidad sirve igual que clonar el puzle
         public SlidingPuzzle(SlidingPuzzle puzzle) {
