@@ -15,6 +15,7 @@ namespace UCM.IAV.Puzzles.Model {
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
+	using UnityEngine;
 
     /*
      * El modelo lógico del puzle deslizante, internamente guarda los datos en una matriz.
@@ -46,7 +47,8 @@ namespace UCM.IAV.Puzzles.Model {
         // La matriz de valores (enteros sin signo) 
         // Podría definirse como tipo genérico, SlidingPuzzle<E> para contener otro tipo de valores.
         private uint[,] matrix;
-		private Random rnd = new Random (Guid.NewGuid().GetHashCode());
+		List<List<Node>> list;
+		private System.Random rnd = new System.Random (Guid.NewGuid().GetHashCode());
         
         // Mantiene una referencia actualizada a la posición del hueco, siempre (por eficiencia) 
         // Lo podría llamar sólo Gap (o SpecialValue)
@@ -87,21 +89,25 @@ namespace UCM.IAV.Puzzles.Model {
 			List<Node> ClosedList = new List<Node>();
 			List<Node> adjacencies;
 			Node current = start;
-
+			Debug.Log ("END " + end.Position);
 			// add start node to Open List
 			OpenList.Add(start);
+			bool found = false;
 
-			while(OpenList.Count != 0 && !ClosedList.Exists(x => x.Position == end.Position))
+			while(OpenList.Count != 0 && !ClosedList.Exists(x => (x.Position.Item1 == end.Position.Item1 && x.Position.Item2 == end.Position.Item2)))
 			{
 				current = OpenList[0];
 				OpenList.Remove(current);
 				ClosedList.Add(current);
 				adjacencies = GetAdjacentNodes(current);
+				Debug.Log (current.Position);
 
-
+				if (current.Position.Item1 == end.Position.Item1 && current.Position.Item2 == end.Position.Item2)
+					Debug.Log ("Encontrado final loko");
+				
 				foreach(Node n in adjacencies)
 				{
-					if (!ClosedList.Contains(n) && valores[matrix[n.Position.Item1, n.Position.Item2]] != valores[2])
+					if (!ClosedList.Contains(n) && valores[matrix[n.Position.Item1, n.Position.Item2]] != valores[3])
 					{
 						if (!OpenList.Contains(n))
 						{
@@ -114,8 +120,9 @@ namespace UCM.IAV.Puzzles.Model {
 				}
 			}
 
+			Debug.Log (ClosedList.Exists(x => (x.Position.Item1 == end.Position.Item1 && x.Position.Item2 == end.Position.Item2)));
 			// construct path, if end was not closed return null
-			if(!ClosedList.Exists(x => x.Position == end.Position))
+			if(!ClosedList.Exists(x => (x.Position.Item1 == end.Position.Item1 && x.Position.Item2 == end.Position.Item2)))
 			{
 				return null;
 			}
@@ -134,25 +141,26 @@ namespace UCM.IAV.Puzzles.Model {
 		{
 			List<Node> temp = new List<Node>();
 
-			uint row = n.Position.Item2;
-			uint col = n.Position.Item1;
+			int row = (int)n.Position.Item2;
+			int col = (int)n.Position.Item1;
 
 			if(row + 1 < rows)
 			{
-				temp.Add(new Node(new Tuple<uint, uint>(row + 1, col), valores[matrix[row + 1, col]]));
+				temp.Add(list[col][row + 1]);
 			}
 			if(row - 1 >= 0)
 			{
-				temp.Add(new Node(new Tuple<uint, uint>(row - 1, col), valores[matrix[row - 1, col]]));
+				temp.Add(list[col][row - 1]);
 			}
 			if(col - 1 >= 0)
 			{
-				temp.Add(new Node(new Tuple<uint, uint>(row, col - 1), valores[matrix[row ,col - 1]]));
+				temp.Add(list[col - 1][row]);
 			}
 			if(col + 1 < columns)
 			{
-				temp.Add(new Node(new Tuple<uint, uint>(row, col + 1), valores[matrix[row, col + 1]]));
+				temp.Add(list[col + 1][row]);
 			}
+
 
 			return temp;
 		}
@@ -204,15 +212,19 @@ namespace UCM.IAV.Puzzles.Model {
 
             // Podría aprovecharse la matriz que ya estuviese creada, pero por ahora no lo hacemos
             matrix = new uint[rows, columns];
+			list = new List<List<Node>>();
 
-            for (var r = 0u; r < rows; r++)
-                for (var c = 0u; c < columns; c++) {
-                    /*matrix[r, c] = GetDefaultValue(r, c);
+			for (var r = 0u; r < rows; r++) {
+				list.Add (new List<Node> ());
+				for (var c = 0u; c < columns; c++) {
+					/*matrix[r, c] = GetDefaultValue(r, c);
                     if (matrix[r, c] == GAP_VALUE)
                         GapPosition = new Position(r, c);*/
 					
-					matrix [r, c] = (uint)rnd.Next(0, 4);
-                }
+					matrix [r, c] = (uint)rnd.Next (0, 4);
+					list[(int)r].Add(new Node (new Tuple<uint, uint> (r, c), valores [matrix [r, c]]));
+				}
+			}
 
             matrix[rnd.Next(0, (int)rows), rnd.Next(0, (int)columns)] = 4;
 

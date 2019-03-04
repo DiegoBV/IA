@@ -249,7 +249,7 @@ namespace UCM.IAV.Puzzles {
 
 		public void AESTRELLA(){
 			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node start = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (0, 0), 1);
-			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node end = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (rows - 1, columns - 1), 1);
+			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node end = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (1, 1), 1);
 			Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack = puzzle.FindPath (start, end );
 
 			print (stack);
