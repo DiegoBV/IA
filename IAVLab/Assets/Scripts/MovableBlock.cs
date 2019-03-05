@@ -107,10 +107,13 @@ namespace UCM.IAV.Puzzles {
         public bool OnMouseUpAsButton() {
 			if (board.getManager ().getTank ().isClicked ()) {
 				//IA
+				//aestrella??????????
+				//board.getManager ().getTank ().setCurrent(this.position);
+				board.getManager().AESTRELLA(this.position);
 				Debug.Log ("IA TIME");
 				return true;
 			}
-			else {
+			else if(this.position != board.getManager ().getTank ().getCurrent()){
 				//Cambio de tipo
                 if(this.type != TipoCasilla.F)
                 {
@@ -119,12 +122,16 @@ namespace UCM.IAV.Puzzles {
 				    } else{
 					    this.type++;
 				    }
+
+					board.getManager ().changeMatrix (this.position, (uint)type);
                 }
 
 				changeColor();
 				changeText();
 				return false;
 			}
+
+			return false;
 
             /*if (board == null) throw new InvalidOperationException("This object has not been initialized");
 

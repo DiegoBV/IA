@@ -100,9 +100,6 @@ namespace UCM.IAV.Puzzles {
 
             // Podríamos asumir que tras cada inicialización o reinicio, el puzle está ordenado y se puede mostrar todo el panel de información
             UpdateInfo();
-
-            
-
         }
 
         // Pone los contadores de información a cero
@@ -247,12 +244,22 @@ namespace UCM.IAV.Puzzles {
             ShowSolution(operators, metrics);
         }
 
-		public void AESTRELLA(){
-			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node start = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (0, 0), 1);
-			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node end = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (1, 1), 1);
+		public void resuelve(){
+			AESTRELLA (puzzle.getGoal ());
+		}
+
+		public void AESTRELLA(Position endPos){
+			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node start = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (getTank().getCurrent().GetRow(), getTank().getCurrent().GetColumn()), 1);
+			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node end = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (endPos.GetRow(), endPos.GetColumn()), 1);
 			Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack = puzzle.FindPath (start, end );
 
-			print (stack);
+			getTank ().setStack (stack);
+
+			/*print (stack.Count);
+			while (stack.Count > 0) {
+				UCM.IAV.Puzzles.Model.SlidingPuzzle.Node n = stack.Pop();
+				print ("Posicion: " + n.Position);
+			}*/
 		}
 
 
@@ -266,6 +273,10 @@ namespace UCM.IAV.Puzzles {
             return "Manager of " + board.ToString() + " over " + puzzle.ToString();
         }
 
+		public void changeMatrix(Position p, uint value){
+			puzzle.getMatrix () [(int)p.GetRow (), (int)p.GetColumn ()] = value;
+		}
+
         public void loadMap()
         {
             string path = "Assets/MAPPP.txt";
@@ -277,18 +288,22 @@ namespace UCM.IAV.Puzzles {
 			uint rows = (uint)Int32.Parse(split[0]);
 			uint cols = (uint)Int32.Parse(split[1]);
 			uint[,] result = new uint[rows, cols];
+			Position nGoal = null;
 
 			for(int i = 0; i < rows; i++){
 				line = mapFile.ReadLine();
 				split = line.Split(' ');
 				for(int j = 0; j < cols; j++){
 					result[i, j] = (uint)Int32.Parse(split[j]);
+					if (result [i, j] == 4)
+						nGoal = new Position ((uint)i, (uint)j);
 				}
 			}
             
 			puzzle.rows = rows;
 			puzzle.columns = cols;
             puzzle.setMatrix(result);
+			puzzle.setGoal (nGoal);
             board.Initialize(this, puzzle);
 
             //Inicializar tanque

@@ -49,6 +49,7 @@ namespace UCM.IAV.Puzzles.Model {
         private uint[,] matrix;
 		List<List<Node>> list;
 		private System.Random rnd = new System.Random (Guid.NewGuid().GetHashCode());
+		private Position goal;
         
         // Mantiene una referencia actualizada a la posición del hueco, siempre (por eficiencia) 
         // Lo podría llamar sólo Gap (o SpecialValue)
@@ -81,6 +82,7 @@ namespace UCM.IAV.Puzzles.Model {
 
 		public Stack<Node> FindPath(Node Start, Node End)
 		{
+			int i = 0;
 			Node start = Start;
 			Node end = End;
 
@@ -89,7 +91,6 @@ namespace UCM.IAV.Puzzles.Model {
 			List<Node> ClosedList = new List<Node>();
 			List<Node> adjacencies;
 			Node current = start;
-			Debug.Log ("END " + end.Position);
 			// add start node to Open List
 			OpenList.Add(start);
 			bool found = false;
@@ -100,10 +101,7 @@ namespace UCM.IAV.Puzzles.Model {
 				OpenList.Remove(current);
 				ClosedList.Add(current);
 				adjacencies = GetAdjacentNodes(current);
-				Debug.Log (current.Position);
-
-				if (current.Position.Item1 == end.Position.Item1 && current.Position.Item2 == end.Position.Item2)
-					Debug.Log ("Encontrado final loko");
+				//Debug.Log (current.Position);
 				
 				foreach(Node n in adjacencies)
 				{
@@ -119,8 +117,8 @@ namespace UCM.IAV.Puzzles.Model {
 					}
 				}
 			}
-
-			Debug.Log (ClosedList.Exists(x => (x.Position.Item1 == end.Position.Item1 && x.Position.Item2 == end.Position.Item2)));
+				
+			//Debug.Log (ClosedList.Exists(x => (x.Position.Item1 == end.Position.Item1 && x.Position.Item2 == end.Position.Item2)));
 			// construct path, if end was not closed return null
 			if(!ClosedList.Exists(x => (x.Position.Item1 == end.Position.Item1 && x.Position.Item2 == end.Position.Item2)))
 			{
@@ -129,7 +127,7 @@ namespace UCM.IAV.Puzzles.Model {
 
 			// if all good, return path
 			Node temp = ClosedList[ClosedList.IndexOf(current)];
-			while(temp.Parent != start && temp != null)
+			while(temp != start && temp != null)
 			{
 				Path.Push(temp);
 				temp = temp.Parent;
@@ -137,14 +135,15 @@ namespace UCM.IAV.Puzzles.Model {
 			return Path;
 		}
 
-		private List<Node> GetAdjacentNodes(Node n) //ME HE HECHO LIO CON LOS INDICES EQUISDE
+		private List<Node> GetAdjacentNodes(Node n)
 		{
+			Debug.Log (list.Count + " " + list[0].Count);
 			List<Node> temp = new List<Node>();
 
 			int row = (int)n.Position.Item2;
 			int col = (int)n.Position.Item1;
 
-			if(row + 1 < rows)
+			if(row + 1 < columns)
 			{
 				temp.Add(list[col][row + 1]);
 			}
@@ -156,7 +155,7 @@ namespace UCM.IAV.Puzzles.Model {
 			{
 				temp.Add(list[col - 1][row]);
 			}
-			if(col + 1 < columns)
+			if(col + 1 < rows)
 			{
 				temp.Add(list[col + 1][row]);
 			}
@@ -196,6 +195,22 @@ namespace UCM.IAV.Puzzles.Model {
             return this.DeepClone();
         }
 
+		public uint[,] getMatrix() {
+			return this.matrix;
+		}
+
+		public Position getGoal(){
+			return goal;
+		}
+
+		public void setGoal(Position newGoal){
+			this.goal = newGoal;
+		}
+
+		public List<List<Node>> getList() {
+			return this.list;
+		}
+
         // Inicializa o reinicia el puzle, con los valores por defecto (S es el valor que representa al hueco)
         //   Por ejemplo, para rows == 4 and columns == 3
         //   1   2   3
@@ -226,8 +241,10 @@ namespace UCM.IAV.Puzzles.Model {
 				}
 			}
 
-            matrix[rnd.Next(0, (int)rows), rnd.Next(0, (int)columns)] = 4;
-
+			int i = rnd.Next (0, (int)rows);
+			int j = rnd.Next (0, (int)columns);
+            matrix[i, j] = 4;
+			goal = new Position ((uint)i, (uint)j);
     }
 
         // Devuelve el que se considera valor inicial por defecto de una posición

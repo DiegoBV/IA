@@ -10,6 +10,9 @@ public class TankBehaviour : MonoBehaviour {
 	bool clicked_ = false;
 	private BlockBoard tablero;
 	private System.Random rnd = new System.Random(Guid.NewGuid().GetHashCode());
+	Position current;
+	Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack = null;
+	Position targetPosition = null;
 
 	public void Initialize(BlockBoard board){
 		tablero = board;
@@ -26,7 +29,9 @@ public class TankBehaviour : MonoBehaviour {
 
 			block_ = tablero.GetBlock(new Position(x, y));
 		}while(block_.getType() == MovableBlock.TipoCasilla.R || block_.getType() == MovableBlock.TipoCasilla.F);
-			
+
+		current = block_.position;
+		print ("hellooo: " + current);
 		this.transform.position = new Vector3 (block_.transform.position.x, this.transform.position.y, block_.transform.position.z);
 	}
 
@@ -52,6 +57,44 @@ public class TankBehaviour : MonoBehaviour {
 				rend.material.SetColor("_Color", Color.green);
 			else
 				rend.material.SetColor("_Color", Color.red);
+		}
+	}
+
+	public void setCurrent(Position p){
+		this.current = p;
+	}
+
+	public Position getCurrent(){
+		return this.current;	
+	}
+
+	public void setStack(Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack_){
+		this.stack = stack_;
+		InvokeRepeating("movement", 2f, 1f);
+	}
+
+	void movement(){
+		if (stack != null && stack.Count > 0) {
+			//me muevo
+			Tuple<uint, uint> pos = stack.Pop ().Position;
+			targetPosition = new Position (pos.Item1, pos.Item2);
+			MovableBlock block_ = tablero.GetBlock (new Position (targetPosition.GetRow (), targetPosition.GetColumn ()));
+			this.transform.position = new Vector3 (block_.transform.position.x, this.transform.position.y, block_.transform.position.z);
+			current = targetPosition;
+
+			/*if (targetPosition == null) {
+				Tuple<uint, uint> pos = stack.Pop ().Position;
+				targetPosition = new Position(pos.Item1, pos.Item2);
+			} else if (targetPosition != getCurrent ()) {
+				MovableBlock block_ = tablero.GetBlock (new Position (targetPosition.GetRow (), targetPosition.GetColumn ()));
+				this.transform.position = new Vector3 (block_.transform.position.x, this.transform.position.y, block_.transform.position.z);
+				current = targetPosition;
+			} else {
+				targetPosition = null;
+			}*/
+		} 
+		else {
+			CancelInvoke ();
 		}
 	}
 }
