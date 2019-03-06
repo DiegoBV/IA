@@ -27,13 +27,15 @@ namespace UCM.IAV.Puzzles.Model {
 		{
 			public Node Parent;
 			public Tuple<uint, uint> Position;
-			public double Cost;
+			public double staticCost;
+			public double costTo;
 
 			public Node(Tuple<uint, uint> pos, double cost)
 			{
 				Parent = null;
 				Position = pos;
-				Cost = cost;
+				staticCost = cost;
+				costTo = 0;
 			}
 		}
 
@@ -110,7 +112,7 @@ namespace UCM.IAV.Puzzles.Model {
 						if (!OpenList.Contains(n))
 						{
 							n.Parent = current;
-							n.Cost = 1 + n.Parent.Cost; //no ta ok por ahora
+							n.costTo = n.staticCost + n.Parent.costTo;
 							OpenList.Add(n);
 							OpenList = OpenList.OrderBy(node => valores[matrix[node.Position.Item1, node.Position.Item2]]).ToList<Node>();
 						}

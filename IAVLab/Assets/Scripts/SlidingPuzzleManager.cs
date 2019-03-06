@@ -138,12 +138,11 @@ namespace UCM.IAV.Puzzles {
         private void UpdateInfo() {
 
             // Según el puzle esté en orden o no, enseño el panel de información o no
-            if (puzzle.IsInDefaultOrder()) {
+
                 timeNumber.text = (time * 1000).ToString("0.0"); // Lo enseñamos en milisegundos y sólo con un decimal
                 stepsNumber.text = steps.ToString();
                 infoPanel.gameObject.SetActive(true);
-            } else
-                infoPanel.gameObject.SetActive(false);
+
 
         }
 
@@ -249,11 +248,15 @@ namespace UCM.IAV.Puzzles {
 		}
 
 		public void AESTRELLA(Position endPos){
+			CleanInfo ();
+			time = Time.realtimeSinceStartup;
 			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node start = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (getTank().getCurrent().GetRow(), getTank().getCurrent().GetColumn()), 1);
 			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node end = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (endPos.GetRow(), endPos.GetColumn()), 1);
 			Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack = puzzle.FindPath (start, end );
-
+			time = Time.realtimeSinceStartup - time;
+			steps = (uint)stack.Count;
 			getTank ().setStack (stack);
+			UpdateInfo ();
 
 			/*print (stack.Count);
 			while (stack.Count > 0) {
