@@ -276,7 +276,7 @@ namespace UCM.IAV.Puzzles {
 			UpdateInfo ();
 
             ArrowPath(stackC);
-            InvokeRepeating("ArrowRemoval", 2f, 1f);
+            //InvokeRepeating("ArrowRemoval", 2f, 1f);
             /*print (stack.Count);
 			while (stack.Count > 0) {
 				UCM.IAV.Puzzles.Model.SlidingPuzzle.Node n = stack.Pop();
