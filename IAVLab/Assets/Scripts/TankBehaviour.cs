@@ -14,6 +14,7 @@ public class TankBehaviour : MonoBehaviour {
 	Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack = null;
 	Position targetPosition = null;
 
+
 	public void Initialize(BlockBoard board){
 		tablero = board;
 		clicked_ = false;
@@ -31,7 +32,7 @@ public class TankBehaviour : MonoBehaviour {
 		}while(block_.getType() == MovableBlock.TipoCasilla.R || block_.getType() == MovableBlock.TipoCasilla.F);
 
 		current = block_.position;
-		print ("hellooo: " + current);
+		//print ("hellooo: " + current);
 		this.transform.position = new Vector3 (block_.transform.position.x, this.transform.position.y, block_.transform.position.z);
 	}
 

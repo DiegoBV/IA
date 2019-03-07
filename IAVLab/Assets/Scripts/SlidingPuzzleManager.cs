@@ -43,6 +43,10 @@ namespace UCM.IAV.Puzzles {
         public InputField rowsInput;
         public InputField columnsInput;
 
+        public GameObject flag;
+        public GameObject arrow;
+        GameObject[] quiver;
+
         //SaveScene
         public TextAsset presetMap;
 
@@ -57,6 +61,8 @@ namespace UCM.IAV.Puzzles {
         private double time = 0.0d; // in seconds
         private uint steps = 0;
 
+
+        int arrowCounter;
         // Generador de números aleatorios del sistema (podría ser el de Unity, también)
         private System.Random random;
 
@@ -86,6 +92,8 @@ namespace UCM.IAV.Puzzles {
             rowsInput.text = rows.ToString();
             columnsInput.text = columns.ToString();
 
+
+
             // Se crea el puzle internamente 
             puzzle = new SlidingPuzzle(rows, columns);
             // Se crea el resolutor (que puede admitir varias estrategias)
@@ -100,6 +108,10 @@ namespace UCM.IAV.Puzzles {
 
             // Podríamos asumir que tras cada inicialización o reinicio, el puzle está ordenado y se puede mostrar todo el panel de información
             UpdateInfo();
+
+            flag.transform.position = new Vector3(-8000,flag.transform.position.y,-8000);
+
+
         }
 
         // Pone los contadores de información a cero
@@ -249,21 +261,27 @@ namespace UCM.IAV.Puzzles {
 
 		public void AESTRELLA(Position endPos){
 			CleanInfo ();
+            flag.transform.position = new Vector3(board.GetBlock(endPos).transform.position.x, flag.transform.position.y, board.GetBlock(endPos).transform.position.z);
 			time = Time.realtimeSinceStartup;
 			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node start = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (getTank().getCurrent().GetRow(), getTank().getCurrent().GetColumn()), 1);
 			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node end = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (endPos.GetRow(), endPos.GetColumn()), 1);
-			Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack = puzzle.FindPath (start, end );
-			time = Time.realtimeSinceStartup - time;
+			Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack  = puzzle.FindPath (start, end );
+            Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stackC = new Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node>(stack);
+
+
+            time = Time.realtimeSinceStartup - time;
 			steps = (uint)stack.Count;
 			getTank ().setStack (stack);
 			UpdateInfo ();
 
-			/*print (stack.Count);
+            ArrowPath(stackC);
+            InvokeRepeating("ArrowRemoval", 2f, 1f);
+            /*print (stack.Count);
 			while (stack.Count > 0) {
 				UCM.IAV.Puzzles.Model.SlidingPuzzle.Node n = stack.Pop();
 				print ("Posicion: " + n.Position);
 			}*/
-		}
+        }
 
 
         // Salir de la aplicación
@@ -315,6 +333,35 @@ namespace UCM.IAV.Puzzles {
             UpdateInfo();
 
             mapFile.Close();
+        }
+
+        void ArrowPath(Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack)
+        {
+            quiver = new GameObject[stack.Count];
+            arrowCounter = quiver.Length-1;
+            stack.Pop();
+            while (stack.Count > 0)
+            {
+                quiver[quiver.Length - stack.Count] = Instantiate(arrow);
+                quiver[quiver.Length - stack.Count].transform.position = new Vector3(board.GetBlock(new Position(stack.Peek().Position.Item1, stack.Peek().Position.Item2)).transform.position.x
+                    , 0.2f, board.GetBlock(new Position(stack.Peek().Position.Item1, stack.Peek().Position.Item2)).transform.position.z);
+                quiver[quiver.Length - stack.Count].name = ("Bloque[" + (quiver.Length - stack.Count) + "]");
+                stack.Pop();
+            }
+        }
+        void ArrowRemoval()
+        {
+            if (arrowCounter > 0)
+            {
+                //print("Should be Removing");
+                Destroy(quiver[arrowCounter].gameObject);
+                arrowCounter--;
+            }
+            else
+            {
+                print("All done");
+                CancelInvoke();
+            }
         }
 
     }

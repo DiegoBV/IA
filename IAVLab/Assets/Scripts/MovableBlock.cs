@@ -86,7 +86,7 @@ namespace UCM.IAV.Puzzles {
 
 			changeColor();
 
-            Debug.Log(ToString() + " initialized.");
+            //Debug.Log(ToString() + " initialized.");
         }
 
         // Intercambia la posición física en la escena con otro bloque

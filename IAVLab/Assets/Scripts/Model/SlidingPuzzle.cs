@@ -139,7 +139,7 @@ namespace UCM.IAV.Puzzles.Model {
 
 		private List<Node> GetAdjacentNodes(Node n)
 		{
-			Debug.Log (list.Count + " " + list[0].Count);
+			//Debug.Log (list.Count + " " + list[0].Count);
 			List<Node> temp = new List<Node>();
 
 			int row = (int)n.Position.Item2;

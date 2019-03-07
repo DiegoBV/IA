@@ -131,7 +131,7 @@ namespace UCM.IAV.Puzzles {
                     uint value = puzzle.GetValue(position);
                    
                     block.Initialize(this, value);
-                    Debug.Log(ToString() + "generated " + block.ToString() + ".");
+                    //Debug.Log(ToString() + "generated " + block.ToString() + ".");
                 }
             }
 
@@ -150,7 +150,7 @@ namespace UCM.IAV.Puzzles {
             if (block == null) throw new ArgumentNullException(nameof(block));
             if (!CanMove(block)) throw new InvalidOperationException("The required movement is not possible");
 
-            Debug.Log(ToString() + " moves " + block.ToString() + ".");
+            //Debug.Log(ToString() + " moves " + block.ToString() + ".");
 
             // Intercambio de valores entre las dos posiciones de la matriz de bloques?
             MovableBlock otherBlock = manager.Move(block);
