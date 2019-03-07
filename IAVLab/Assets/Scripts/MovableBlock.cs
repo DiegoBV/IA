@@ -105,32 +105,36 @@ namespace UCM.IAV.Puzzles {
         // Podría reaccionarse con un sonido si el intento falla, aunque ahora no se hace nada
         // La he puesto pública para que se puedan simular pulsaciones sobre un bloque desde el gestor
         public bool OnMouseUpAsButton() {
-			if (board.getManager ().getTank ().isClicked ()) {
-				//IA
-				//aestrella??????????
-				//board.getManager ().getTank ().setCurrent(this.position);
-				board.getManager().AESTRELLA(this.position);
-				Debug.Log ("IA TIME");
-				return true;
-			}
-			else if(this.position != board.getManager ().getTank ().getCurrent()){
-				//Cambio de tipo
-                if(this.type != TipoCasilla.F)
-                {
-				    if (this.type == TipoCasilla.R) {
-					    this.type = TipoCasilla.L;
-				    } else{
-					    this.type++;
-				    }
+            if (board.getManager().getTank().ready())
+            {
 
-					board.getManager ().changeMatrix (this.position, (uint)type);
+                if (board.getManager().getTank().isClicked()) {
+                    //IA
+                    //aestrella??????????
+                    //board.getManager ().getTank ().setCurrent(this.position);
+                    board.getManager().AESTRELLA(this.position);
+                    Debug.Log("IA TIME");
+                    return true;
+                }
+                else if (this.position != board.getManager().getTank().getCurrent()) {
+                    //Cambio de tipo
+                    if (this.type != TipoCasilla.F)
+                    {
+                        if (this.type == TipoCasilla.R) {
+                            this.type = TipoCasilla.L;
+                        } else {
+                            this.type++;
+                        }
+
+                        board.getManager().changeMatrix(this.position, (uint)type);
+                    }
+
+                    changeColor();
+                    changeText();
+                    return false;
                 }
 
-				changeColor();
-				changeText();
-				return false;
-			}
-
+            }
 			return false;
 
             /*if (board == null) throw new InvalidOperationException("This object has not been initialized");

@@ -70,7 +70,17 @@ namespace UCM.IAV.Puzzles.Model {
 
         public void setMatrix(uint[,] newMatrix)
         {
+            list = new List<List<Node>>();
             matrix = (uint[,])newMatrix.Clone();
+
+            for (uint i = 0; i < rows; i++)
+            {
+                list.Add(new List<Node>());
+                for (uint j = 0; j < columns; j++)
+                {
+                    list[(int)i].Add(new Node(new Tuple<uint, uint>(i, j), valores[matrix[i, j]]));
+                }
+            }
         }
 
         // Construye la matriz de dimensiones (rows) por (columns)
@@ -82,7 +92,7 @@ namespace UCM.IAV.Puzzles.Model {
             this.Initialize(rows, columns);
         }
 
-		public Stack<Node> FindPath(Node Start, Node End)
+		public Stack<Node> FindPath(Node Start, Node End,int h = 1)
 		{
 			int i = 0;
 			Node start = Start;
@@ -114,9 +124,21 @@ namespace UCM.IAV.Puzzles.Model {
 							n.Parent = current;
 							n.costTo = n.staticCost + n.Parent.costTo;
 							OpenList.Add(n);
-							OpenList = OpenList.OrderBy(node => valores[matrix[node.Position.Item1, node.Position.Item2]]).ToList<Node>();
-						}
-					}
+                            switch (h)
+                            {
+                                case 1:
+                                    OpenList = OpenList.OrderBy(node => valores[matrix[node.Position.Item1, node.Position.Item2]] + heurísticaEuclidea(end,node)).ToList<Node>();
+                                    break;
+                                case 2:
+                                    OpenList = OpenList.OrderBy(node => valores[matrix[node.Position.Item1, node.Position.Item2]] + heurísticaRng()).ToList<Node>();
+                                    break;
+                                case 3:
+                                    OpenList = OpenList.OrderBy(node => valores[matrix[node.Position.Item1, node.Position.Item2]] + heurísticaAltura(end,node)).ToList<Node>();
+                                    break;
+                            }
+
+                        }
+                    }
 				}
 			}
 				
@@ -221,6 +243,8 @@ namespace UCM.IAV.Puzzles.Model {
         //   10  11  S
         // Como mínimo el puzle debe ser de 1x1
         public void Initialize(uint rows, uint columns) {
+            if(list != null)list.Clear();
+
             if (rows == 0) throw new ArgumentException(string.Format("{0} is not a valid rows value", rows), "rows");
             if (columns == 0) throw new ArgumentException(string.Format("{0} is not a valid columns value", columns), "columns");
 
@@ -477,6 +501,26 @@ namespace UCM.IAV.Puzzles.Model {
             return "Puzzle{" + string.Join(",", matrix) + "}"; //Join en realidad sólo funciona con matrices de string, voy a tener que hacer el bucle
         }
 
+        double heurísticaEuclidea(Node end, Node n)
+        {
+            Debug.Log("BIBA PITAGO");
+            float a = ((int)end.Position.Item1 - (int)n.Position.Item1);
+            float b = ((int)end.Position.Item2 - (int)n.Position.Item2);
+            double h = Math.Sqrt(((a * a) + (b * b)));
+            return h;
+        }
+        double heurísticaRng()
+        {
+            double rng = rnd.Next(0, 100);
+            Debug.Log(rng);
+            return rng;
+        }
+        double heurísticaAltura(Node end, Node n)
+        {
+            Debug.Log("DAME TU Y!!!!!!!!!!!!!!!!!!!");
+            return Math.Abs(end.Position.Item2 - n.Position.Item2)* 2;
+        }
+     
     }
 }
 

@@ -232,6 +232,7 @@ namespace UCM.IAV.Puzzles {
 			return tank;
 		}
 
+
         public void SolvePuzzleByBFS() {
 
             // Si está correcto, no lo resuelvo (o lo puedo llamar igualmente y que me devuelva una solución vacía, ok?
@@ -259,13 +260,13 @@ namespace UCM.IAV.Puzzles {
 			AESTRELLA (puzzle.getGoal ());
 		}
 
-		public void AESTRELLA(Position endPos){
+		public void AESTRELLA(Position endPos , int h = 1){
 			CleanInfo ();
             flag.transform.position = new Vector3(board.GetBlock(endPos).transform.position.x, flag.transform.position.y, board.GetBlock(endPos).transform.position.z);
 			time = Time.realtimeSinceStartup;
 			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node start = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (getTank().getCurrent().GetRow(), getTank().getCurrent().GetColumn()), 1);
 			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node end = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (endPos.GetRow(), endPos.GetColumn()), 1);
-			Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack  = puzzle.FindPath (start, end );
+			Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack  = puzzle.FindPath (start, end, h);
             Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stackC = new Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node>(stack);
 
 
@@ -353,7 +354,6 @@ namespace UCM.IAV.Puzzles {
         {
             if (arrowCounter > 0)
             {
-                //print("Should be Removing");
                 Destroy(quiver[arrowCounter].gameObject);
                 arrowCounter--;
             }
@@ -364,6 +364,14 @@ namespace UCM.IAV.Puzzles {
             }
         }
 
+        public void ResolverRng()
+        {
+            AESTRELLA(puzzle.getGoal(), 2);
+        }
+        public void ResolverAZ()
+        {
+            AESTRELLA(puzzle.getGoal(), 3);
+        }
     }
 }
 

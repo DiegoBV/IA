@@ -71,6 +71,7 @@ public class TankBehaviour : MonoBehaviour {
 
 	public void setStack(Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack_){
 		this.stack = stack_;
+        //CancelInvoke();
 		InvokeRepeating("movement", 2f, 1f);
 	}
 
@@ -98,4 +99,16 @@ public class TankBehaviour : MonoBehaviour {
 			CancelInvoke ();
 		}
 	}
+
+    public bool ready()
+    {
+        if (stack == null)
+        {
+            return true;
+        }
+        else if (stack.Count > 0) return false;
+        else return true;
+
+    }
+
 }
