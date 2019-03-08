@@ -122,7 +122,7 @@ namespace UCM.IAV.Puzzles.Model {
 						if (!OpenList.Contains(n))
 						{
 							n.Parent = current;
-							n.costTo = n.staticCost + n.Parent.costTo;
+							n.costTo = n.staticCost + current.costTo;
 							OpenList.Add(n);
                             switch (h)
                             {

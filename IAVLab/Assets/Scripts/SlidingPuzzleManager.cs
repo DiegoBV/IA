@@ -38,8 +38,10 @@ namespace UCM.IAV.Puzzles {
         public BlockBoard board;
 		public TankBehaviour tank;            
         public GameObject infoPanel;
+		public GameObject errorGO;
         public Text timeNumber;
         public Text stepsNumber;
+		public Text costNumber;
         public InputField rowsInput;
         public InputField columnsInput;
 
@@ -60,7 +62,7 @@ namespace UCM.IAV.Puzzles {
         private SlidingPuzzleSolver solver;
         private double time = 0.0d; // in seconds
         private uint steps = 0;
-
+		private uint cost = 0;
 
         int arrowCounter;
         // Generador de números aleatorios del sistema (podría ser el de Unity, también)
@@ -147,22 +149,19 @@ namespace UCM.IAV.Puzzles {
         }
 
         // Actualiza la información del panel, mostrándolo si corresponde
-        private void UpdateInfo() {
-
+        private void UpdateInfo() {			
             // Según el puzle esté en orden o no, enseño el panel de información o no
-
-                timeNumber.text = (time * 1000).ToString("0.0"); // Lo enseñamos en milisegundos y sólo con un decimal
-                stepsNumber.text = steps.ToString();
-                infoPanel.gameObject.SetActive(true);
-
-
+            timeNumber.text = (time * 1000).ToString("0.0"); // Lo enseñamos en milisegundos y sólo con un decimal
+            stepsNumber.text = steps.ToString();
+			costNumber.text = cost.ToString ();
+            infoPanel.gameObject.SetActive(true);
         }
 
         // Reinicia el puzle entero, recreándolo con las nuevas dimensiones si han cambiado 
         public void ResetPuzzle() {
 
             // Tampoco debería hacer nada si han fallado las conversiones a uint...
-            if (rowsInput.text != null && columnsInput.text != null) {
+			if (rowsInput.text != null && columnsInput.text != null && getTank().ready()) {
                 uint newRows = Convert.ToUInt32(rowsInput.text);
                 uint newColumns = Convert.ToUInt32(columnsInput.text);
 
@@ -267,15 +266,19 @@ namespace UCM.IAV.Puzzles {
 			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node start = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (getTank().getCurrent().GetRow(), getTank().getCurrent().GetColumn()), 1);
 			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node end = new UCM.IAV.Puzzles.Model.SlidingPuzzle.Node (new Tuple<uint, uint> (endPos.GetRow(), endPos.GetColumn()), 1);
 			Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack  = puzzle.FindPath (start, end, h);
-            Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stackC = new Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node>(stack);
 
+			if (stack != null) {
+				Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stackC = new Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node>(stack);
+				errorGO.SetActive (false);
+				time = Time.realtimeSinceStartup - time;
+				steps = (uint)stack.Count;
+				getTank ().setStack (stack);
+				UpdateInfo ();
 
-            time = Time.realtimeSinceStartup - time;
-			steps = (uint)stack.Count;
-			getTank ().setStack (stack);
-			UpdateInfo ();
-
-            ArrowPath(stackC);
+				ArrowPath (stackC);
+			} else {
+				errorGO.SetActive (true);
+			}
             //InvokeRepeating("ArrowRemoval", 2f, 1f);
             /*print (stack.Count);
 			while (stack.Count > 0) {
@@ -340,15 +343,17 @@ namespace UCM.IAV.Puzzles {
         {
             quiver = new GameObject[stack.Count];
             arrowCounter = quiver.Length-1;
-            stack.Pop();
+			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node n = stack.Pop();
+			cost = (uint)n.costTo; // se copia al reves lel
             while (stack.Count > 0)
             {
                 quiver[quiver.Length - stack.Count] = Instantiate(arrow);
                 quiver[quiver.Length - stack.Count].transform.position = new Vector3(board.GetBlock(new Position(stack.Peek().Position.Item1, stack.Peek().Position.Item2)).transform.position.x
                     , 0.2f, board.GetBlock(new Position(stack.Peek().Position.Item1, stack.Peek().Position.Item2)).transform.position.z);
                 quiver[quiver.Length - stack.Count].name = ("Bloque[" + (quiver.Length - stack.Count) + "]");
-                stack.Pop();
+                n = stack.Pop();
             }
+			//print ("coste hii" + n.Position + " " + n.staticCost + "  " + n.costTo);
         }
         void ArrowRemoval()
         {

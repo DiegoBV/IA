@@ -75,6 +75,10 @@ public class TankBehaviour : MonoBehaviour {
 		InvokeRepeating("movement", 2f, 1f);
 	}
 
+	public Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> getStack(){
+		return stack;
+	}
+
 	void movement(){
 		if (stack != null && stack.Count > 0) {
 			//me muevo
