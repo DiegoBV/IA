@@ -44,7 +44,7 @@ namespace UCM.IAV.Puzzles.Model {
         // Dimensión de las columnas
         public uint columns;
 
-		private double[] valores = new double[] {1, 2, 4, 1e9, 1};
+		public double[] valores = new double[] {1, 2, 4, 1e9, 1};
 
         // La matriz de valores (enteros sin signo) 
         // Podría definirse como tipo genérico, SlidingPuzzle<E> para contener otro tipo de valores.

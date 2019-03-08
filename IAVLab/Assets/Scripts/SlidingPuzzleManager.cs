@@ -120,6 +120,7 @@ namespace UCM.IAV.Puzzles {
         public void CleanInfo() {
             time = 0.0d;
             steps = 0;
+			cost = 0;
         }
 
         // Devuelve cierto si un bloque se puede mover, si se lo permite el gestor
@@ -273,9 +274,8 @@ namespace UCM.IAV.Puzzles {
 				time = Time.realtimeSinceStartup - time;
 				steps = (uint)stack.Count;
 				getTank ().setStack (stack);
-				UpdateInfo ();
-
 				ArrowPath (stackC);
+				UpdateInfo ();
 			} else {
 				errorGO.SetActive (true);
 			}
@@ -341,19 +341,21 @@ namespace UCM.IAV.Puzzles {
 
         void ArrowPath(Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack)
         {
+			cost = 0;
             quiver = new GameObject[stack.Count];
             arrowCounter = quiver.Length-1;
 			UCM.IAV.Puzzles.Model.SlidingPuzzle.Node n = stack.Pop();
-			cost = (uint)n.costTo; // se copia al reves lel
             while (stack.Count > 0)
             {
+				cost += (uint)puzzle.valores[puzzle.getMatrix()[n.Position.Item1, n.Position.Item2]];
                 quiver[quiver.Length - stack.Count] = Instantiate(arrow);
                 quiver[quiver.Length - stack.Count].transform.position = new Vector3(board.GetBlock(new Position(stack.Peek().Position.Item1, stack.Peek().Position.Item2)).transform.position.x
                     , 0.2f, board.GetBlock(new Position(stack.Peek().Position.Item1, stack.Peek().Position.Item2)).transform.position.z);
                 quiver[quiver.Length - stack.Count].name = ("Bloque[" + (quiver.Length - stack.Count) + "]");
                 n = stack.Pop();
             }
-			//print ("coste hii" + n.Position + " " + n.staticCost + "  " + n.costTo);
+
+			cost += (uint)puzzle.valores[puzzle.getMatrix()[n.Position.Item1, n.Position.Item2]];
         }
         void ArrowRemoval()
         {
