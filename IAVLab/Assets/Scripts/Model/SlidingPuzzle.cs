@@ -503,7 +503,6 @@ namespace UCM.IAV.Puzzles.Model {
 
         double heurísticaEuclidea(Node end, Node n)
         {
-            Debug.Log("BIBA PITAGO");
             float a = ((int)end.Position.Item1 - (int)n.Position.Item1);
             float b = ((int)end.Position.Item2 - (int)n.Position.Item2);
             double h = Math.Sqrt(((a * a) + (b * b)));
@@ -517,7 +516,6 @@ namespace UCM.IAV.Puzzles.Model {
         }
         double heurísticaAltura(Node end, Node n)
         {
-            Debug.Log("DAME TU Y!!!!!!!!!!!!!!!!!!!");
             return Math.Abs(end.Position.Item2 - n.Position.Item2)* 2;
         }
      
