@@ -304,39 +304,36 @@ namespace UCM.IAV.Puzzles {
 
         public void loadMap()
         {
-            string path = "Assets/MAPPP.txt";
+			if (getTank ().ready ()) {
+				string map = presetMap.text; 
 
-            StreamReader mapFile = new StreamReader(path);
+				string[] split = map.Split (new char[] { ' ', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+				uint rows = (uint)Int32.Parse (split [0]);
+				uint cols = (uint)Int32.Parse (split [1]);
+				uint[,] result = new uint[rows, cols];
+				Position nGoal = null;
 
-			string line = mapFile.ReadLine();
-			string[] split = line.Split(' ');
-			uint rows = (uint)Int32.Parse(split[0]);
-			uint cols = (uint)Int32.Parse(split[1]);
-			uint[,] result = new uint[rows, cols];
-			Position nGoal = null;
-
-			for(int i = 0; i < rows; i++){
-				line = mapFile.ReadLine();
-				split = line.Split(' ');
-				for(int j = 0; j < cols; j++){
-					result[i, j] = (uint)Int32.Parse(split[j]);
-					if (result [i, j] == 4)
-						nGoal = new Position ((uint)i, (uint)j);
+				int index = 2;
+				for (int i = 0; i < rows; i++) {
+					for (int j = 0; j < cols; j++) {
+						result [i, j] = (uint)Int32.Parse (split [index]);
+						index++;
+						if (result [i, j] == 4)
+							nGoal = new Position ((uint)i, (uint)j);
+					}
 				}
-			}
             
-			puzzle.rows = rows;
-			puzzle.columns = cols;
-            puzzle.setMatrix(result);
-			puzzle.setGoal (nGoal);
-            board.Initialize(this, puzzle);
+				puzzle.rows = rows;
+				puzzle.columns = cols;
+				puzzle.setMatrix (result);
+				puzzle.setGoal (nGoal);
+				board.Initialize (this, puzzle);
 
-            //Inicializar tanque
-            tank.Initialize(board);
-            CleanInfo();
-            UpdateInfo();
-
-            mapFile.Close();
+				//Inicializar tanque
+				tank.Initialize (board);
+				CleanInfo ();
+				UpdateInfo ();
+			}
         }
 
         void ArrowPath(Stack<UCM.IAV.Puzzles.Model.SlidingPuzzle.Node> stack)
