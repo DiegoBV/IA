@@ -7,7 +7,7 @@ public class Board : MonoBehaviour {
 
     private Matrix matriz;
     private GameObject[,] tablero; //en vez de game objects, deberia der de casillas
-    public /*Casilla*/ GameObject casillaPrefab;
+    public GameObject casillaPrefab;
     private GameManager manager;
 
 	// Use this for initialization
@@ -22,10 +22,7 @@ public class Board : MonoBehaviour {
         matriz = new Matrix();
         matriz.Initialize();
         tablero = new GameObject[matriz.getRows(), matriz.getCols()];
-        Debug.Log("hey");
-
         GenerateBoard();
-        //hacer
     }
 
     void GenerateBoard()
@@ -39,8 +36,9 @@ public class Board : MonoBehaviour {
             {
                 tablero[i, j] = Instantiate(casillaPrefab, new Vector3(j * casillaPrefab.transform.localScale.x * 2, 0, i * casillaPrefab.transform.localScale.z * 2), Quaternion.identity);
                 //hay que colocarlos benne equisde
-                //casilla.Position = i, j
-                //casilla.Tipo = matrix[i, j]
+				Casilla casComp = casillaPrefab.GetComponent<Casilla>();
+				casComp.setPosition (new Position (i, j));
+				casComp.setType (matriz [i, j]);
             }
         }
     }

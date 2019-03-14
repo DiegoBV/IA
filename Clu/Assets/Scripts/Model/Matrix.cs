@@ -39,5 +39,14 @@ namespace Model
 
         public int getRows() { return rows; }
         public int getCols() { return cols; }
+
+		public int this[int k1, int k2]{
+			get{
+				return matrix [k1, k2];
+			}
+			set{
+				matrix [k1, k2] = value;
+			}
+		}
     }
 }
