@@ -51,5 +51,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5f62c6a6ba8d5f45b984c4eba3a9d1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  casillaPrefab: {fileID: 1267976980902984, guid: 9ed4820262ed2fd49a8140bcefc2765d,
-    type: 2}
+  casillaPrefab: {fileID: 0}

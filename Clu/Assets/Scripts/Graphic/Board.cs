@@ -6,22 +6,16 @@ using Model;
 public class Board : MonoBehaviour {
 
     private Matrix matriz;
-    private GameObject[,] tablero; //en vez de game objects, deberia der de casillas
-    public GameObject casillaPrefab;
+    private Casilla[,] tablero; //en vez de game objects, deberia der de casillas
+	public Casilla casillaPrefab;
     private GameManager manager;
-
-	// Use this for initialization
-	void Start () {
-        
-      //colocar casillas
-	}
 
     public void Initialize(GameManager manager)
     {
         this.manager = manager;
         matriz = new Matrix();
         matriz.Initialize();
-        tablero = new GameObject[matriz.getRows(), matriz.getCols()];
+        tablero = new Casilla[matriz.getRows(), matriz.getCols()];
         GenerateBoard();
     }
 
@@ -34,12 +28,25 @@ public class Board : MonoBehaviour {
         {
             for(int j = 0; j < cols; j++)
             {
-                tablero[i, j] = Instantiate(casillaPrefab, new Vector3(j * casillaPrefab.transform.localScale.x * 2, 0, i * casillaPrefab.transform.localScale.z * 2), Quaternion.identity);
+				Casilla cas = Instantiate(casillaPrefab, new Vector3(j * casillaPrefab.gameObject.transform.localScale.x , 0, i * casillaPrefab.gameObject.transform.localScale.z), Quaternion.identity);
+				tablero [i, j] = cas;
+				cas.Initialize (this, new Position(i, j));
+				cas.setType (matriz [i, j]);
                 //hay que colocarlos benne equisde
+				/*tablero[i,j].GetComponent<Casilla>.
 				Casilla casComp = casillaPrefab.GetComponent<Casilla>();
 				casComp.setPosition (new Position (i, j));
-				casComp.setType (matriz [i, j]);
+				tablero[i,j].GetComponent<Renderer>().material.SetColor("_Color", Color.blue);*/
             }
         }
     }
+
+	public Casilla this[int k1, int k2]{
+		get{
+			return tablero [k1, k2];
+		}
+		set{
+			tablero [k1, k2] = (Casilla)value;
+		}
+	}
 }
