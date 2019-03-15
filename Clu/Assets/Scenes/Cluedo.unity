@@ -188,18 +188,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 47709051}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 441858574}
-        m_MethodName: resetGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &47709051
@@ -464,10 +453,10 @@ RectTransform:
   m_Father: {fileID: 710636864}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 77, y: 40}
-  m_SizeDelta: {x: 516.9, y: 130.9}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -97}
+  m_SizeDelta: {x: 373, y: 65.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &182170689
 MonoBehaviour:
@@ -602,6 +591,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27cc2d133c63c6143b3c4121fc6ee5a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ResetDialog:
+    confText: Reset
+    cancText: Cancel
+    genText: Do you want to reset the entire game?
+    confEv:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 441858574}
+          m_MethodName: resetGame
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   tablero: {fileID: 1370647611}
   colors:
   - {r: 0, g: 0.95086265, b: 1, a: 0}
@@ -1083,13 +1092,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1665564430}
+  - component: {fileID: 1665564431}
   m_Layer: 5
   m_Name: ModalDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1665564430
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1110,6 +1120,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1665564431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1665564429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88176b28f66b50945aa01ea5dbdb03a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  confButton: {fileID: 47709050}
+  generalText: {fileID: 182170689}
+  confText: {fileID: 1434113958}
+  canText: {fileID: 70619705}
 --- !u!1 &1738739784
 GameObject:
   m_ObjectHideFlags: 0
