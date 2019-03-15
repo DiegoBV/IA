@@ -8,18 +8,13 @@ public class Casilla : MonoBehaviour {
 	private Position position; //posicion en el tablero
 	private int type;
 	private Board b;
-	private CasillaMatrix innerMatrix; //booleanos, true si hay algo
+	private bool ocupada;
+	//private CasillaMatrix innerMatrix; //booleanos, true si hay algo
 
 	// Use this for initialization
 	void Start () {
 		this.gameObject.SetActive (true);
-		innerMatrix = new CasillaMatrix (3, 3);
-		innerMatrix.Initialize (); //faltaria darle una "hitbox" que se haria aqui i guess
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		ocupada = false;
 	}
 
 	private void changeColor(){
@@ -59,7 +54,6 @@ public class Casilla : MonoBehaviour {
 				break;
 			}
 		}
-		//rend.material.SetColor ("_Color", new Color(0.81f, 0.49f, 0.0f, 1f));
 	}
 
 	public void Initialize(Board b, Position p){
@@ -70,6 +64,9 @@ public class Casilla : MonoBehaviour {
 	public void setPosition(Position p) {
 		position = p;
 	}
+	public void setOcupada(bool b){
+		this.ocupada = b;
+	}
 	public void setType(int t) {
 		type = t;
 		changeColor ();
@@ -79,5 +76,8 @@ public class Casilla : MonoBehaviour {
 	}
 	public int getType(){
 		return this.type;
+	}
+	public bool getOcupada(){
+		return this.ocupada;
 	}
 }

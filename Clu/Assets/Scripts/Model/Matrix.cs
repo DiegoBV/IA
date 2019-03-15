@@ -39,6 +39,7 @@ namespace Model
 
         public int getRows() { return rows; }
         public int getCols() { return cols; }
+		public Random getRandomSeed() { return rnd; }
 
 		public int this[int k1, int k2]{
 			get{
