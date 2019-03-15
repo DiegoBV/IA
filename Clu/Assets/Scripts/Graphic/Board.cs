@@ -17,29 +17,29 @@ public class Board : MonoBehaviour {
 
     public void Initialize(GameManager manager)
     {
+		DestroyBoard ();
+		DestroyCharacters ();
         this.manager = manager;
         matriz = new Matrix();
         matriz.Initialize();
-		sospechosos = new GameObject[personajesPrefab.GetLength (0)];
-		tablero = new Casilla[matriz.getRows()*matriz.getRows(), matriz.getCols()*matriz.getCols()];
-		rows = tablero.GetLength (0);
-		cols = tablero.GetLength (1);
+		rows = matriz.getRows();
+		cols = matriz.getCols();
         GenerateBoard();
 		GenerateCharacters ();
     }
 
     void GenerateBoard()
     {
-        int rows = matriz.getRows();
-        int cols = matriz.getCols();
+		tablero = new Casilla[rows*rows, cols*cols];
 
-        for(int i = 0; i < rows*rows; i++)
+		for(int i = 0; i < tablero.GetLength(0); i++)
         {
-            for(int j = 0; j < cols*cols; j++)
+			for(int j = 0; j < tablero.GetLength(1); j++)
             {
 				Casilla cas = Instantiate(casillaPrefab, new Vector3(j * casillaPrefab.gameObject.transform.localScale.x*1.1f , 0, -i * casillaPrefab.gameObject.transform.localScale.z*1.1f), Quaternion.identity);
 				tablero [i, j] = cas;
 				cas.Initialize (this, new Position(i, j));
+				cas.setOcupada (false);
 				cas.setType (matriz[i/matriz.getRows(), j/matriz.getCols()]);
             }
         }
@@ -48,14 +48,15 @@ public class Board : MonoBehaviour {
 	void GenerateCharacters()
 	{
 		System.Random rnd = matriz.getRandomSeed ();
+		sospechosos = new GameObject[personajesPrefab.GetLength (0)];
 
 		for (int i = 0; i < personajesPrefab.GetLength (0); i++) {
 			int k1 = 0;
 			int k2 = 0;
 
 			do{
-				k1 = rnd.Next (0, rows);
-				k2 = rnd.Next (0, cols);
+				k1 = rnd.Next (0, tablero.GetLength(0));
+				k2 = rnd.Next (0, tablero.GetLength(1));
 			}while(tablero[k1, k2].getOcupada());
 
 			Casilla cas = tablero [k1, k2];
@@ -63,6 +64,29 @@ public class Board : MonoBehaviour {
 			GameObject o = Instantiate (personajesPrefab [i]);
 			o.transform.position = new Vector3 (cas.transform.position.x, cas.transform.position.y + cas.transform.localScale.y/2, cas.transform.position.z);
 			sospechosos [i] = o;
+		}
+	}
+
+	void DestroyBoard()
+	{
+		if (tablero != null) { //if called the first time, does nothing
+			for (int i = 0; i < tablero.GetLength(0); i++)
+				for (int j = 0; j < tablero.GetLength(1); j++) {
+					if (tablero [i, j] != null) {
+						Destroy (tablero [i, j].gameObject);
+					}
+				}
+		}
+	}
+
+	void DestroyCharacters()
+	{
+		if (sospechosos != null) { //same as above
+			for(int i = 0; i < sospechosos.GetLength(0); i++){
+				if (sospechosos [i] != null) {
+					Destroy (sospechosos [i].gameObject);
+				}
+			}
 		}
 	}
 

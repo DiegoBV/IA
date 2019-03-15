@@ -6,14 +6,12 @@ public class RandomAnimationPicker : MonoBehaviour {
 
 	Animator anim;
 	int AnimChoose;
-
-	float speed ;
 	
 	// Update is called once per frame
 	void Start () {
 		
 		anim = GetComponent<Animator> ();
-		anim.speed = speed = 1;
+		anim.speed = 1;
 
 		AnimChoose = Random.Range(1,3);
 		anim.SetInteger("Idle", AnimChoose);
