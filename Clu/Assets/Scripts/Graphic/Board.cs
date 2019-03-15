@@ -74,4 +74,8 @@ public class Board : MonoBehaviour {
 			tablero [k1, k2] = value;
 		}
 	}
+
+	public GameManager getManager(){
+		return this.manager;
+	}
 }

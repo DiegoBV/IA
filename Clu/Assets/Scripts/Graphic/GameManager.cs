@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public Board tablero;
-
+	public Color[] colors;
     //lo del instance....
 
 	// Use this for initialization
