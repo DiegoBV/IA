@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour {
 	public DialogObject ResetDialog;
+	public DialogObject QuitDialog;
     public Board tablero;
 	public Color[] colors;
 	public static GameManager instance = null;
@@ -35,14 +36,25 @@ public class GameManager : MonoBehaviour {
 		cancelModalDialog();
 	}
 
-	public void activeModalDialog()
+	public void activeModalDialogReset()
 	{
 		modalDialog.SetActive (true);
 		modalDialog.GetComponent<Modal> ().setDialog (ResetDialog);
 	}
 
+	public void activeModalDialogQuit()
+	{
+		modalDialog.SetActive (true);
+		modalDialog.GetComponent<Modal> ().setDialog (QuitDialog);
+	}
+
 	public void cancelModalDialog()
 	{
 		modalDialog.SetActive (false);
+	}
+
+	public void Quit()
+	{
+		Application.Quit ();
 	}
 }
