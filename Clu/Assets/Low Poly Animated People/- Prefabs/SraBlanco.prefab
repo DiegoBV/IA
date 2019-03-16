@@ -200,7 +200,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4929749145715146}
   - component: {fileID: 95346159984905544}
-  - component: {fileID: 114696060900654690}
+  - component: {fileID: 114183339004024434}
+  - component: {fileID: 114094332294502190}
   m_Layer: 0
   m_Name: SraBlanco
   m_TagString: Untagged
@@ -756,7 +757,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114696060900654690
+--- !u!114 &114094332294502190
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -765,6 +766,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ca642625b449a4ca8b7963b51f6aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114183339004024434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1557781041527304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f33b97d6afdcc843b07f422c14a9720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!137 &137844978961305262

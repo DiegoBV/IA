@@ -14,7 +14,6 @@ public class Casilla : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		this.gameObject.SetActive (true);
-		ocupada = false;
 	}
 
 	private void changeColor(){
@@ -26,6 +25,13 @@ public class Casilla : MonoBehaviour {
 	public void Initialize(Board b, Position p){
 		this.b = b;
 		setPosition (p);
+	}
+
+	public bool OnMouseUpAsButton(){
+		if(GameManager.instance.CanInteract())
+			GameManager.instance.getPlayerActive ().Move (this.position);
+		
+		return true;
 	}
 
 	public void setPosition(Position p) {

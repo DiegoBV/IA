@@ -306,7 +306,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4794417547847856}
   - component: {fileID: 95508312538269940}
-  - component: {fileID: 114747232111116084}
+  - component: {fileID: 114751559859044122}
+  - component: {fileID: 114765575121900172}
   m_Layer: 0
   m_Name: SrtaAmapola
   m_TagString: Untagged
@@ -756,7 +757,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114747232111116084
+--- !u!114 &114751559859044122
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1658597154487084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f33b97d6afdcc843b07f422c14a9720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114765575121900172
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}

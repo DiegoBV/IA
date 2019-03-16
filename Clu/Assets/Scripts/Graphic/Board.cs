@@ -10,10 +10,10 @@ public class Board : MonoBehaviour {
     private Casilla[,] tablero; //en vez de game objects, deberia der de casillas
 	public Casilla casillaPrefab;
     private GameManager manager;
-	public GameObject[] personajesPrefab;
 	private GameObject[] sospechosos;  //el de arriba es de prefab, no se toca
 	private int rows;
 	private int cols;
+	System.Random rnd;
 
     public void Initialize(GameManager manager)
     {
@@ -22,6 +22,7 @@ public class Board : MonoBehaviour {
         this.manager = manager;
         matriz = new Matrix();
         matriz.Initialize();
+		rnd = matriz.getRandomSeed ();
 		rows = matriz.getRows();
 		cols = matriz.getCols();
         GenerateBoard();
@@ -45,25 +46,37 @@ public class Board : MonoBehaviour {
         }
     }
 
+	Casilla getNoOcupCasilla(){
+		int k1 = 0;
+		int k2 = 0;
+
+		do{
+			k1 = rnd.Next (0, tablero.GetLength(0));
+			k2 = rnd.Next (0, tablero.GetLength(1));
+		}while(tablero[k1, k2].getOcupada());
+
+		Casilla cas = tablero [k1, k2];
+
+		return cas;
+	}
+
 	void GenerateCharacters()
 	{
-		System.Random rnd = matriz.getRandomSeed ();
-		sospechosos = new GameObject[personajesPrefab.GetLength (0)];
+		sospechosos = new GameObject[GameManager.instance.sospechososPrefab.GetLength (0)];
 
-		for (int i = 0; i < personajesPrefab.GetLength (0); i++) {
-			int k1 = 0;
-			int k2 = 0;
-
-			do{
-				k1 = rnd.Next (0, tablero.GetLength(0));
-				k2 = rnd.Next (0, tablero.GetLength(1));
-			}while(tablero[k1, k2].getOcupada());
-
-			Casilla cas = tablero [k1, k2];
+		for (int i = 0; i < GameManager.instance.sospechososPrefab.GetLength (0); i++) {
+			Casilla cas = getNoOcupCasilla ();
 			cas.setOcupada (true);
-			GameObject o = Instantiate (personajesPrefab [i]);
+			GameObject o = Instantiate (GameManager.instance.sospechososPrefab [i]);
 			o.transform.position = new Vector3 (cas.transform.position.x, cas.transform.position.y + cas.transform.localScale.y/2, cas.transform.position.z);
 			sospechosos [i] = o;
+			sospechosos [i].GetComponent<Sospechoso> ().setType (cas.getType());
+		}
+
+		for(int i = 0; i < GameManager.instance.characters.GetLength(0); i++){
+			Casilla cas = getNoOcupCasilla ();
+			cas.setOcupada (true);
+			GameManager.instance.characters[i].transform.position = new Vector3 (cas.transform.position.x, cas.transform.position.y + cas.transform.localScale.y/2, cas.transform.position.z);
 		}
 	}
 
@@ -101,5 +114,9 @@ public class Board : MonoBehaviour {
 
 	public GameManager getManager(){
 		return this.manager;
+	}
+
+	public GameObject[] getSospechosos(){
+		return sospechosos;
 	}
 }

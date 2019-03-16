@@ -12,5 +12,10 @@ namespace Model
 
         public int getRow() { return row; }
         public int getCol() { return col; }
+
+		public override string ToString ()
+		{
+			return "(" + row + ", " + col + ")";
+		}
     }
 }
