@@ -3,24 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using Model;
 
-public class Mechanics : MonoBehaviour {
+public class Player : MonoBehaviour {
 
 	public bool UserControlled;
-	bool myTurn = true;
-	Casilla actualCas = null;
+	private bool myTurn = true;
+	private Casilla actualCas = null;
+	private List<DeckManager.DeckElements> myCards;
+
 	// Use this for initialization
 	void Start () {
 		if (UserControlled) {
-			GameManager.instance.setPlayerActive (this);
 			Renderer rend = this.GetComponent<Renderer> ();
 			rend.enabled = true;
 			rend.material.SetColor("_Color", Color.black);
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public void Initialize(){
+		if(UserControlled)
+			GameManager.instance.setPlayerActive (this);
+
+		print ("Mi baraja: ");
+		foreach (DeckManager.DeckElements element in myCards)
+			print (element);
+
+		print ("------------");
 	}
 
 	public void Move(Position p){
@@ -40,10 +47,20 @@ public class Mechanics : MonoBehaviour {
 	public bool isMyTurn(){
 		return myTurn;
 	}
+
 	public void toggleTurn(){
 		myTurn = !myTurn;
 
 		if(myTurn)
 			GameManager.instance.setPlayerActive (this);
 	}
+
+	public List<DeckManager.DeckElements> getMyCards(){
+		return this.myCards;
+	}
+
+	public void setMyCards(List<DeckManager.DeckElements> l){
+		this.myCards = l;
+	}
+		
 }

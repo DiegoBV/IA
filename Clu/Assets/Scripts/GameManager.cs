@@ -3,29 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System;
 using Model;
 
 public class GameManager : MonoBehaviour {
 	public DialogObject ResetDialog;
 	public DialogObject QuitDialog;
     public Board tablero;
+	public DeckManager deckManager;
 	public Color[] colors;
 	public static GameManager instance = null;
 	public GameObject modalDialog;
 	public GameObject[] sospechososPrefab;
-	public GameObject[] characters;
-	private Mechanics turn; //quien es el turno
+	public Player[] players;
+	private Player turn; //quien es el turno
 	private bool modalsAreActive = false;
 	[HideInInspector] public enum Place {Biblioteca, Cocina, Comedor, Estudio, Pasillo,
 		Recibidor, Sala_del_billar, Salon_de_baile, Terraza};
+	private System.Random rnd = new System.Random(Guid.NewGuid().GetHashCode());
 
 	// Use this for initialization
 	void Awake () {
 		instance = this;
-		this.Initialize();
 		modalDialog.SetActive (false);
 	}
-	
+
+	void Start(){
+		this.Initialize();
+	}
+
 	// Update is called once per frame
 	void Update () {
 		
@@ -34,6 +40,9 @@ public class GameManager : MonoBehaviour {
     void Initialize()
     {
         tablero.Initialize(this);
+		deckManager.Initialize ();
+		foreach (Player element in players)
+			element.Initialize ();
     }
 
 	public void resetGame()
@@ -71,11 +80,11 @@ public class GameManager : MonoBehaviour {
 		return this.tablero [p.getRow (), p.getCol ()];
 	}
 
-	public Mechanics getPlayerActive(){
+	public Player getPlayerActive(){
 		return this.turn;
 	}
 
-	public void setPlayerActive(Mechanics t){
+	public void setPlayerActive(Player t){
 		this.turn = t;
 	}
 
@@ -97,5 +106,11 @@ public class GameManager : MonoBehaviour {
 
 	public bool CanInteract(){
 		return !this.modalsAreActive;
+	}
+
+	public System.Random getRandomSeed() { return rnd; }
+
+	public DeckManager GetDeckManager() {
+		return deckManager;
 	}
 }

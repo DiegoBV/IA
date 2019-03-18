@@ -22,7 +22,7 @@ public class Board : MonoBehaviour {
         this.manager = manager;
         matriz = new Matrix();
         matriz.Initialize();
-		rnd = matriz.getRandomSeed ();
+		rnd = GameManager.instance.getRandomSeed ();
 		rows = matriz.getRows();
 		cols = matriz.getCols();
         GenerateBoard();
@@ -73,10 +73,10 @@ public class Board : MonoBehaviour {
 			sospechosos [i].GetComponent<Sospechoso> ().setType (cas.getType());
 		}
 
-		for(int i = 0; i < GameManager.instance.characters.GetLength(0); i++){
+		for(int i = 0; i < GameManager.instance.players.GetLength(0); i++){
 			Casilla cas = getNoOcupCasilla ();
 			cas.setOcupada (true);
-			GameManager.instance.characters[i].transform.position = new Vector3 (cas.transform.position.x, cas.transform.position.y + cas.transform.localScale.y/2, cas.transform.position.z);
+			GameManager.instance.players[i].transform.position = new Vector3 (cas.transform.position.x, cas.transform.position.y + cas.transform.localScale.y/2, cas.transform.position.z);
 		}
 	}
 

@@ -545,11 +545,12 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 182170687}
   m_CullTransparentMesh: 0
---- !u!1 &258178338 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1525941258016712, guid: f148606b9dd47cd498b8758dbdceb2c9,
+--- !u!114 &258178339 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114267934229094264, guid: f148606b9dd47cd498b8758dbdceb2c9,
     type: 2}
   m_PrefabInternal: {fileID: 1403285901}
+  m_Script: {fileID: 11500000, guid: 46650203f5907af438160bfb98f4d91c, type: 3}
 --- !u!1 &375152398
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,6 +685,7 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   tablero: {fileID: 1370647611}
+  deckManager: {fileID: 664136547}
   colors:
   - {r: 0, g: 0.95086265, b: 1, a: 0}
   - {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 0}
@@ -702,10 +704,10 @@ MonoBehaviour:
   - {fileID: 1358345872624266, guid: f05cdfcd2f7ed7d42b569b59ada417cc, type: 2}
   - {fileID: 1926961846836044, guid: 01ff658c6b5e3bb46859f053f230e5e2, type: 2}
   - {fileID: 1976210721378074, guid: 6eba095a66f9f2048bb797284f38b660, type: 2}
-  characters:
-  - {fileID: 1110382793}
-  - {fileID: 258178338}
-  - {fileID: 1733140447}
+  players:
+  - {fileID: 1110382794}
+  - {fileID: 258178339}
+  - {fileID: 1733140448}
 --- !u!4 &441858575
 Transform:
   m_ObjectHideFlags: 0
@@ -718,6 +720,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &664136546
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 664136548}
+  - component: {fileID: 664136547}
+  m_Layer: 0
+  m_Name: DeckManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &664136547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 664136546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6044d1386e8754d44972fea95f2f4279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalElements: 21
+  types: 090000000600000006000000
+  cardsPerPlayer: 6
+--- !u!4 &664136548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 664136546}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 530, y: 266.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &710636863
 GameObject:
@@ -914,11 +959,12 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1082257711}
   m_CullTransparentMesh: 0
---- !u!1 &1110382793 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1525941258016712, guid: f148606b9dd47cd498b8758dbdceb2c9,
+--- !u!114 &1110382794 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114267934229094264, guid: f148606b9dd47cd498b8758dbdceb2c9,
     type: 2}
   m_PrefabInternal: {fileID: 15125104}
+  m_Script: {fileID: 11500000, guid: 46650203f5907af438160bfb98f4d91c, type: 3}
 --- !u!1 &1130626628
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,11 +1485,12 @@ MonoBehaviour:
   generalText: {fileID: 182170689}
   confText: {fileID: 1434113958}
   canText: {fileID: 70619705}
---- !u!1 &1733140447 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1525941258016712, guid: f148606b9dd47cd498b8758dbdceb2c9,
+--- !u!114 &1733140448 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114267934229094264, guid: f148606b9dd47cd498b8758dbdceb2c9,
     type: 2}
   m_PrefabInternal: {fileID: 1660520477}
+  m_Script: {fileID: 11500000, guid: 46650203f5907af438160bfb98f4d91c, type: 3}
 --- !u!1 &1738739784
 GameObject:
   m_ObjectHideFlags: 0
