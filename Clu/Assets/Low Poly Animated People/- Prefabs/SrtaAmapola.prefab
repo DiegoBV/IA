@@ -308,9 +308,10 @@ GameObject:
   - component: {fileID: 95508312538269940}
   - component: {fileID: 114751559859044122}
   - component: {fileID: 114765575121900172}
+  - component: {fileID: 65622566492647944}
   m_Layer: 0
   m_Name: SrtaAmapola
-  m_TagString: Untagged
+  m_TagString: Srta Amapola
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -631,7 +632,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1658597154487084}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 11, y: 0, z: -44}
+  m_LocalPosition: {x: 539.3827, y: 276.7305, z: -33.59025}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 4711227335860212}
@@ -739,6 +740,18 @@ Transform:
   m_Father: {fileID: 4832211577813580}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65622566492647944
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1658597154487084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8367462, y: 1.9088058, z: 0.5622692}
+  m_Center: {x: 0.0055770874, y: 0.8670845, z: -0.017471313}
 --- !u!95 &95508312538269940
 Animator:
   serializedVersion: 3

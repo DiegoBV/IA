@@ -383,9 +383,10 @@ GameObject:
   - component: {fileID: 95218233700904998}
   - component: {fileID: 114612843127743326}
   - component: {fileID: 114949558400619210}
+  - component: {fileID: 65951739502400370}
   m_Layer: 0
   m_Name: SraCeleste
-  m_TagString: Untagged
+  m_TagString: Sra Celeste
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -464,7 +465,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1997458756296572}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33, y: 0, z: -44}
+  m_LocalPosition: {x: 541.3605, y: 274.77173, z: -44.978825}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 4687147603904520}
@@ -739,6 +740,18 @@ Transform:
   m_Father: {fileID: 4068586651676354}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65951739502400370
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1997458756296572}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9334717, y: 1.5798416, z: 0.7812109}
+  m_Center: {x: -0.03326416, y: 0.8106804, z: 0.10939455}
 --- !u!95 &95218233700904998
 Animator:
   serializedVersion: 3

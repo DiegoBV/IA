@@ -70,13 +70,14 @@ public class Board : MonoBehaviour {
 			GameObject o = Instantiate (GameManager.instance.sospechososPrefab [i]);
 			o.transform.position = new Vector3 (cas.transform.position.x, cas.transform.position.y + cas.transform.localScale.y/2, cas.transform.position.z);
 			sospechosos [i] = o;
-			sospechosos [i].GetComponent<Sospechoso> ().setType (cas.getType());
+			sospechosos [i].GetComponent<Sospechoso> ().setActualCas (cas);
 		}
 
 		for(int i = 0; i < GameManager.instance.players.GetLength(0); i++){
 			Casilla cas = getNoOcupCasilla ();
 			cas.setOcupada (true);
 			GameManager.instance.players[i].transform.position = new Vector3 (cas.transform.position.x, cas.transform.position.y + cas.transform.localScale.y/2, cas.transform.position.z);
+			GameManager.instance.players [i].setActualCas (cas);
 		}
 	}
 
@@ -118,5 +119,15 @@ public class Board : MonoBehaviour {
 
 	public GameObject[] getSospechosos(){
 		return sospechosos;
+	}
+
+	public List<Casilla> getCasillasOfType(int t){
+		List<Casilla> l = new List<Casilla> ();
+		foreach (Casilla c in tablero) {
+			if (c.getType () == t) {
+				l.Add (c);
+			}
+		}
+		return l;
 	}
 }

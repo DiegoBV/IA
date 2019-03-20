@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Prof. Prado
+  - Prof. Mora
+  - Cnel. Rubio
+  - Sra Blanco
+  - Sra Celeste
+  - Srta Amapola
   layers:
   - Default
   - TransparentFX

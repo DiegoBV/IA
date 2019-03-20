@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour {
 	public int IsSomeoneInMyPlace(Place p){ //maybe devolver a todos los sospechosos que esten
 		int howMany = 0;
 		for (int i = 0; i < tablero.getSospechosos ().GetLength (0); i++) {
-			if ((Place)tablero.getSospechosos () [i].GetComponent<Sospechoso>().getType() == p) {
+			if ((Place)tablero.getSospechosos () [i].GetComponent<Sospechoso>().getActualCas().getType() == p) {
 				howMany++;
 			}
 		}
@@ -112,5 +112,20 @@ public class GameManager : MonoBehaviour {
 
 	public DeckManager GetDeckManager() {
 		return deckManager;
+	}
+
+	public List<Casilla> getCasillasInPlace(Place p){
+		List<Casilla> l = tablero.getCasillasOfType ((int)p);
+
+		return l;
+	}
+
+	public void MoveTo(GameObject o, Casilla orCas, Casilla destCas){
+		o.transform.position = new Vector3 (destCas.transform.position.x, 
+			destCas.transform.position.y + destCas.transform.localScale.y / 2, 
+			destCas.transform.position.z);
+
+		destCas.setOcupada (true);
+		orCas.setOcupada (false);
 	}
 }

@@ -202,9 +202,10 @@ GameObject:
   - component: {fileID: 95346159984905544}
   - component: {fileID: 114183339004024434}
   - component: {fileID: 114094332294502190}
+  - component: {fileID: 65985819918063540}
   m_Layer: 0
   m_Name: SraBlanco
-  m_TagString: Untagged
+  m_TagString: Sra Blanco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -731,7 +732,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1557781041527304}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -44}
+  m_LocalPosition: {x: 540.6821, y: 272.2496, z: -44.697502}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_Children:
   - {fileID: 4234678606764370}
@@ -739,6 +740,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!65 &65985819918063540
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1557781041527304}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.90927124, y: 1.6658859, z: 0.61275196}
+  m_Center: {x: -0.038467407, y: 0.8318596, z: -0.09612894}
 --- !u!95 &95346159984905544
 Animator:
   serializedVersion: 3

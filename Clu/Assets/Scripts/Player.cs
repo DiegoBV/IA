@@ -33,9 +33,7 @@ public class Player : MonoBehaviour {
 	public void Move(Position p){
 		Casilla cas = GameManager.instance.getCasilla (p);
 		if(myTurn && !cas.getOcupada()){
-			this.transform.position = new Vector3 (cas.transform.position.x, 
-				cas.transform.position.y + cas.transform.localScale.y / 2, 
-					cas.transform.position.z);
+			GameManager.instance.MoveTo (this.gameObject, actualCas, cas);
 			actualCas = cas;
 
 			int s = GameManager.instance.IsSomeoneInMyPlace ((GameManager.Place)actualCas.getType ());
@@ -61,6 +59,18 @@ public class Player : MonoBehaviour {
 
 	public void setMyCards(List<DeckManager.DeckElements> l){
 		this.myCards = l;
+	}
+
+	public GameManager.Place GetPlace(){
+		return (GameManager.Place)this.actualCas.getType ();
+	}
+
+	public Casilla getActualCas(){
+		return this.actualCas;
+	}
+
+	public void setActualCas(Casilla c){
+		this.actualCas = c;
 	}
 		
 }
