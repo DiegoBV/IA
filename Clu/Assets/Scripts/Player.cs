@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	private bool myTurn = true;
 	private Casilla actualCas = null;
 	private List<DeckManager.DeckElements> myCards;
+    public SuspectList Slist;
 
 	// Use this for initialization
 	void Start () {

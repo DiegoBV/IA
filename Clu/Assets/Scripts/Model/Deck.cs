@@ -11,6 +11,11 @@ namespace Model {
 		private int[] difElem_;
 		private List<int> sol_;
 
+        public List<int> getDeck()
+        {
+            return deck_;
+        }
+
 		public Deck (int numElem, int[] difElem) { //numero de elementos totales y array que indica el numero total de cada tipo diferente que existe (estancia, sospechosos, objetos, puede haber mas)
 			this.numElem_ = numElem;
 			this.difElem_ = difElem;
