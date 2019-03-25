@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
 	public Player[] players;
 	private Player turn; //quien es el turno
 	private bool modalsAreActive = false;
+	private DeckManager.DeckElements[] acc = new DeckManager.DeckElements[3];
 	[HideInInspector] public enum Place {Biblioteca, Cocina, Comedor, Estudio, Pasillo,
 		Recibidor, Sala_del_billar, Salon_de_baile, Terraza};
 	private System.Random rnd = new System.Random(Guid.NewGuid().GetHashCode());
@@ -93,15 +94,14 @@ public class GameManager : MonoBehaviour {
 		return (Place)tipo;
 	}
 
-	public int IsSomeoneInMyPlace(Place p){ //maybe devolver a todos los sospechosos que esten
-		int howMany = 0;
+	public List<Sospechoso> IsSomeoneInMyPlace(Place p){ //maybe devolver a todos los sospechosos que esten
+		List<Sospechoso> l = new List<Sospechoso> ();
 		for (int i = 0; i < tablero.getSospechosos ().GetLength (0); i++) {
 			if ((Place)tablero.getSospechosos () [i].GetComponent<Sospechoso>().getActualCas().getType() == p) {
-				howMany++;
+				l.Add (tablero.getSospechosos () [i].GetComponent<Sospechoso> ());
 			}
 		}
-
-		return howMany;
+		return l;
 	}
 
 	public bool CanInteract(){
@@ -127,5 +127,17 @@ public class GameManager : MonoBehaviour {
 
 		destCas.setOcupada (true);
 		orCas.setOcupada (false);
+	}
+
+	public void makeAccusation(DeckManager.DeckElements e, int index)
+	{
+		this.acc[index] = e;
+		this.acc[2] = (DeckManager.DeckElements)this.getPlayerActive().getActualCas().getType();
+		print(".....");
+		foreach (DeckManager.DeckElements a in this.acc)
+		{
+			print(a);
+		}
+		print(".....");
 	}
 }

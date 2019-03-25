@@ -6,6 +6,7 @@ public class Sospechoso : MonoBehaviour {
 
 	private int typeCasilla; //casilla sobre la que se encuentra
 	private Casilla actualCas;
+	public int type;
 
 	public void setActualCas(Casilla c){
 		this.actualCas = c;
@@ -53,5 +54,9 @@ public class Sospechoso : MonoBehaviour {
 				print ("Me acusan, a mi, a " + this.tag);
 			}
 		}
+	}
+
+	public int getType(){
+		return this.type;
 	}
 }

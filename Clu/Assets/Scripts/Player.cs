@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
 	private Casilla actualCas = null;
 	private List<DeckManager.DeckElements> myCards;
     public SuspectList Slist;
+	private List<Sospechoso> suspInPlace;
 
 	// Use this for initialization
 	void Start () {
@@ -37,8 +38,8 @@ public class Player : MonoBehaviour {
 			GameManager.instance.MoveTo (this.gameObject, actualCas, cas);
 			actualCas = cas;
 
-			int s = GameManager.instance.IsSomeoneInMyPlace ((GameManager.Place)actualCas.getType ());
-			print("Hay " + s + " sospechosos conmigo");
+			suspInPlace = GameManager.instance.IsSomeoneInMyPlace ((GameManager.Place)actualCas.getType ());
+			print("Hay " + suspInPlace.Count + " sospechosos conmigo");
 			//comprobar cosas......
 		}
 	}
@@ -72,6 +73,14 @@ public class Player : MonoBehaviour {
 
 	public void setActualCas(Casilla c){
 		this.actualCas = c;
+	}
+
+	public List<Sospechoso> getSuspectsInPlace(){
+		return this.suspInPlace;
+	}
+
+	public void setSuspectsInPlace(List<Sospechoso> l){
+		this.suspInPlace = l;
 	}
 		
 }

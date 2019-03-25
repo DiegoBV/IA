@@ -37,7 +37,20 @@ namespace Model
             }
         }
 
-        public int getRows() { return rows; }
+        public void Initialize(int value = 0) //generacion a partir de un valor por defecto
+        {
+            matrix = new int[rows, cols];
+            
+            for(int i = 0; i < rows; i++)
+            {
+                for(int j = 0; j < cols; j++)
+                {
+                    matrix[i, j] = value;
+                } 
+            }
+        }
+
+            public int getRows() { return rows; }
         public int getCols() { return cols; }
 
 		public int this[int k1, int k2]{
