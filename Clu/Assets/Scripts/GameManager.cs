@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
 		Recibidor, Sala_del_billar, Salon_de_baile, Terraza};
 	private System.Random rnd = new System.Random(Guid.NewGuid().GetHashCode());
 
+    SuspectsTable table;
 	// Use this for initialization
 	void Awake () {
 		instance = this;
@@ -43,6 +44,8 @@ public class GameManager : MonoBehaviour {
 		deckManager.Initialize ();
 		foreach (Player element in players)
 			element.Initialize ();
+
+        table.initialize(players[0], players[1], players[2]);
     }
 
 	public void resetGame()
