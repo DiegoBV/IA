@@ -79,7 +79,6 @@ public class Board : MonoBehaviour {
 			GameManager.instance.players[i].transform.position = new Vector3 (cas.transform.position.x, cas.transform.position.y + cas.transform.localScale.y/2, cas.transform.position.z);
 			GameManager.instance.players [i].setActualCas (cas);
 			GameManager.instance.players [i].setSuspectsInPlace (GameManager.instance.IsSomeoneInMyPlace ((GameManager.Place)cas.getType ()));
-
 		}
 	}
 

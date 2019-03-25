@@ -9,13 +9,8 @@ public class Player : MonoBehaviour {
 	private bool myTurn = true;
 	private Casilla actualCas = null;
 	private List<DeckManager.DeckElements> myCards;
-<<<<<<< HEAD
-
-	private List<Sospechoso> suspInPlace;
-    public SuspectList Slist = new SuspectList();
-=======
     public SuspectList Slist;
->>>>>>> parent of aa23806... TheSuperDuperTable
+	private List<Sospechoso> suspInPlace;
 
 	// Use this for initialization
 	void Start () {
