@@ -24,7 +24,7 @@ public class SuspectList : MonoBehaviour {
         return rooms;
     }
 
-    public void Initialized(List<int> deck, int numElem, int[] difElem)
+    public void Initialized(List<DeckManager.DeckElements> deck, int numElem, int[] difElem)
     {
         this.numElem_ = numElem;
         this.difElem_ = difElem;
@@ -39,27 +39,27 @@ public class SuspectList : MonoBehaviour {
 
         for (int i = 0; i < rooms.Length; i++)
         {
-            if (deck[index] < difElem_[0])
+            if ((int)deck[index] < difElem_[0])
             {
-                suspetcs[deck[index]] = true;
+                suspetcs[(int)deck[index]] = true;
                 index++;
             }
             else i = suspetcs.Length;
         }
         for (int i = 0; i < suspetcs.Length; i++)
         {
-            if (deck[index] < difElem_[0])
+            if ((int)deck[index] < difElem_[1])
             {
-                suspetcs[deck[index] - difElem_[0]] = true;
+                suspetcs[(int)deck[index] - difElem_[0]] = true;
                 index++;
             }
             else i = suspetcs.Length;
         }
         for (int i = 0; i < weapons.Length; i++)
         {
-            if (deck[index] < difElem_[0])
+            if ((int)deck[index] < difElem_[2])
             {
-                suspetcs[deck[index] - (difElem_[0] + difElem_[1])] = true;
+                suspetcs[(int)deck[index] - (difElem_[0] + difElem_[1])] = true;
                 index++;
             }
             else i = suspetcs.Length;

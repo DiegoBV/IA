@@ -39,4 +39,13 @@ public class DeckManager : MonoBehaviour {
 			GameManager.instance.players [i].setMyCards (l);
 		}
 	}
+
+    public int getTotal()
+    {
+        return totalElements;
+    }
+    public int[] getTypes()
+    {
+        return types;
+    }
 }

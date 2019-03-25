@@ -9,8 +9,9 @@ public class Player : MonoBehaviour {
 	private bool myTurn = true;
 	private Casilla actualCas = null;
 	private List<DeckManager.DeckElements> myCards;
-    public SuspectList Slist;
+
 	private List<Sospechoso> suspInPlace;
+    public SuspectList Slist = new SuspectList();
 
 	// Use this for initialization
 	void Start () {
@@ -30,6 +31,9 @@ public class Player : MonoBehaviour {
 			print (element);
 
 		print ("------------");
+
+        int[] pac = new int[] {9,6,6};
+        Slist.Initialized(myCards, 21, pac);
 	}
 
 	public void Move(Position p){
