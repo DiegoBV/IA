@@ -8,20 +8,6 @@ public class SuspectsTable : MonoBehaviour {
     bool[][] p2_ = new bool[3][];
     bool[][] p3_ = new bool[3][];
 
-    public GameObject TheBigTable;
-
-    public GameObject roomTable;
-    public GameObject murdererTable;
-    public GameObject weaponTable;
-
-    public GameObject[] PButtons = new GameObject[3];
-
-    public GameObject[] SmrtButtons = new GameObject[3];
-
-    public GameObject[] DumButtons = new GameObject[3];
-
-    bool flag = false;
-
     public void initialize(Player p1, Player p2, Player p3)
     {
         p1_[0] = p1.Slist.rooms;
@@ -37,18 +23,8 @@ public class SuspectsTable : MonoBehaviour {
         p3_[2] = p1.Slist.weapons;
     }
 
-    
     public void visualize()
     {
 
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            flag = !flag;
-            TheBigTable.SetActive(flag);
-        }
     }
 }
