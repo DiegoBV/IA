@@ -11558,6 +11558,11 @@ Prefab:
       propertyPath: m_Name
       value: SmartBot
       objectReference: {fileID: 0}
+    - target: {fileID: 114267934229094264, guid: f148606b9dd47cd498b8758dbdceb2c9,
+        type: 2}
+      propertyPath: order
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f148606b9dd47cd498b8758dbdceb2c9, type: 2}
   m_IsPrefabAsset: 0
@@ -13954,6 +13959,11 @@ Prefab:
     - target: {fileID: 1525941258016712, guid: f148606b9dd47cd498b8758dbdceb2c9, type: 2}
       propertyPath: m_Name
       value: DumbBot
+      objectReference: {fileID: 0}
+    - target: {fileID: 114267934229094264, guid: f148606b9dd47cd498b8758dbdceb2c9,
+        type: 2}
+      propertyPath: order
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f148606b9dd47cd498b8758dbdceb2c9, type: 2}

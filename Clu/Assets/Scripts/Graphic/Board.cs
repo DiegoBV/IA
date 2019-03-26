@@ -131,4 +131,12 @@ public class Board : MonoBehaviour {
 		}
 		return l;
 	}
+
+	public int getRows(){
+		return tablero.GetLength(0);
+	}
+
+	public int getCols(){
+		return tablero.GetLength(1);
+	}
 }

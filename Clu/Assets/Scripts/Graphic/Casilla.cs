@@ -28,8 +28,11 @@ public class Casilla : MonoBehaviour {
 	}
 
 	public bool OnMouseUpAsButton(){
-		if(GameManager.instance.CanInteract())
-			GameManager.instance.getPlayerActive ().Move (this.position);
+        if (GameManager.instance.CanInteract())
+        {
+            if(GameManager.instance.getPlayerActive().userControlled())
+                GameManager.instance.getPlayerActive().Move(this.position);
+        }
 		
 		return true;
 	}

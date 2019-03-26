@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour {
 
 	public void setPlayerActive(Player t){
 		this.turn = t;
+        t.setMyTurn(true);
 	}
 
 	public Place whereIsIt(int tipo)
@@ -132,6 +133,20 @@ public class GameManager : MonoBehaviour {
 		orCas.setOcupada (false);
 	}
 
+	public void changeTurn(int order){
+        players[order].setMyTurn(false);
+
+		int nOrder = order + 1;
+        if (nOrder >= players.GetLength(0))
+        {
+            nOrder = 0;
+        }
+
+		this.setPlayerActive (players [nOrder]);
+
+		players [nOrder].Activate ();
+	}
+
 	public void makeAccusation(DeckManager.DeckElements e, int index)
 	{
 		this.acc[index] = e;
@@ -142,5 +157,13 @@ public class GameManager : MonoBehaviour {
 			print(a);
 		}
 		print(".....");
+	}
+
+	public int getRows(){
+		return this.tablero.getRows();
+	}
+
+	public int getCols(){
+		return this.tablero.getCols ();
 	}
 }
