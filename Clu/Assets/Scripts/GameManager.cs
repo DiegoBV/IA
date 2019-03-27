@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
     public Board tablero;
 	public DeckManager deckManager;
 	public Color[] colors;
+    public Button accuseButton;
 	public static GameManager instance = null;
 	public GameObject modalDialog;
 	public GameObject[] sospechososPrefab;
@@ -46,8 +47,10 @@ public class GameManager : MonoBehaviour {
 		foreach (Player element in players)
 			element.Initialize ();
 
+
         table = new SuspectsTable();
         table.initialize(players[0], players[1], players[2]);
+        accuseButton.gameObject.SetActive(false);
     }
 
 	public void resetGame()
@@ -135,6 +138,11 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void changeTurn(int order){
+        for (int i = 0; i < this.acc.GetLength(0); i++) // reinicio de la acusacion
+            this.acc[0] = 0;
+
+        accuseButton.gameObject.SetActive(false);
+
         players[order].setMyTurn(false);
 
 		int nOrder = order + 1;
@@ -151,14 +159,27 @@ public class GameManager : MonoBehaviour {
 	public void makeAccusation(DeckManager.DeckElements e, int index)
 	{
 		this.acc[index] = e;
-		this.acc[2] = (DeckManager.DeckElements)this.getPlayerActive().getActualCas().getType();
-		print(".....");
+		this.acc[0] = (DeckManager.DeckElements)this.getPlayerActive().getActualCas().getType();
+        /*print(".....");
 		foreach (DeckManager.DeckElements a in this.acc)
 		{
 			print(a);
 		}
-		print(".....");
-	}
+		print(".....");*/
+       
+        if(this.acc[1] >= DeckManager.DeckElements.Sra_Amapola && this.acc[1] <= DeckManager.DeckElements.Cnel_Rubio &&
+            this.acc[2] >= DeckManager.DeckElements.Candelabro) //acusacion valida
+        {
+            accuseButton.gameObject.SetActive(true);
+        }
+
+    }
+
+    public void Suggest() //boton
+    {
+        //mandar mensaje a todos para comprobar las demas cartar
+        Debug.Log("Mandando mensaje, sugerencia: " + this.acc[0] + ", " + this.acc[1] + ", " + this.acc[2]);
+    }
 
 	public int getRows(){
 		return this.tablero.getRows();
