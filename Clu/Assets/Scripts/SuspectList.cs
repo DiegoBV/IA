@@ -4,38 +4,25 @@ using UnityEngine;
 
 public class SuspectList : MonoBehaviour {
 
+    [HideInInspector]
     public bool[] suspetcs;
+    [HideInInspector]
     public bool[] weapons;
+    [HideInInspector]
     public bool[] rooms;
 
     private int[] difElem_;
     private int numElem_;
 
-    public bool[] getSuspetcs()
-    {
-        return suspetcs;
-    }
-    public bool[] getWeapons()
-    {
-        return weapons;
-    }
-    public bool[] getRooms()
-    {
-        return rooms;
-    }
-
-    public void Initialized(List<DeckManager.DeckElements> deck, int numElem, int[] difElem)
+    public void Initialize(List<DeckManager.DeckElements> deck, int numElem, int[] difElem)
     {
         this.numElem_ = numElem;
         this.difElem_ = difElem;
-
 
         suspetcs = new bool[difElem_[0]];
         weapons = new bool[difElem_[1]];
         rooms = new bool[difElem_[2]];
         int index = 0;
-
-
 
         for (int i = 0; i < rooms.Length; i++)
         {
@@ -64,7 +51,19 @@ public class SuspectList : MonoBehaviour {
             }
             else i = suspetcs.Length;
         }
-
-
     }
+
+    public bool[] getSuspetcs()
+    {
+        return suspetcs;
+    }
+    public bool[] getWeapons()
+    {
+        return weapons;
+    }
+    public bool[] getRooms()
+    {
+        return rooms;
+    }
+
 }

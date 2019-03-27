@@ -10,8 +10,9 @@ public class Player : MonoBehaviour {
 	private bool myTurn = false;
 	private Casilla actualCas = null;
 	private List<DeckManager.DeckElements> myCards;
-    public SuspectList Slist;
 	private List<Sospechoso> suspInPlace;
+
+    
 
 	// Use this for initialization
 	void Start () {
@@ -20,7 +21,7 @@ public class Player : MonoBehaviour {
 			rend.enabled = true;
 			rend.material.SetColor("_Color", Color.black);
 		}
-	}
+    }
 
 	public void Initialize(){
 		if(UserControlled)
@@ -30,10 +31,18 @@ public class Player : MonoBehaviour {
 		foreach (DeckManager.DeckElements element in myCards)
 			print (element);
 
-		print ("------------");
+		
+        //It Breaks here
+        int[] array = new int[] { 9, 6, 6 }; //Temp
+        GetComponent<SuspectList>().Initialize(myCards, 21, array);
 	}
 
-	public bool Move(Position p){
+    public SuspectList GetSuspectList()
+    {
+        return GetComponent<SuspectList>();
+    }
+
+    public bool Move(Position p){
 		Casilla cas = GameManager.instance.getCasilla (p);
 		if(myTurn && !cas.getOcupada()){
 			print ("dandole wey");

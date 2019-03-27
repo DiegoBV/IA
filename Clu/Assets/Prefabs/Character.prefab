@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23359942970910870}
   - component: {fileID: 136728058693853080}
   - component: {fileID: 114267934229094264}
+  - component: {fileID: 114557152012506196}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -97,6 +98,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UserControlled: 0
+  order: 0
+--- !u!114 &114557152012506196
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1525941258016712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dc7b039b06a23c4b9bc319e5108a950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  suspetcs: 
+  weapons: 
+  rooms: 
 --- !u!136 &136728058693853080
 CapsuleCollider:
   m_ObjectHideFlags: 1
