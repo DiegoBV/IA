@@ -9,10 +9,12 @@ using Model;
 public class GameManager : MonoBehaviour {
 	public DialogObject ResetDialog;
 	public DialogObject QuitDialog;
+    public DialogObject AccuseDialog;
     public Board tablero;
 	public DeckManager deckManager;
 	public Color[] colors;
     public Button accuseButton;
+    public Text accuseText;
 	public static GameManager instance = null;
 	public GameObject modalDialog;
 	public GameObject[] sospechososPrefab;
@@ -24,9 +26,15 @@ public class GameManager : MonoBehaviour {
 		Recibidor, Sala_del_billar, Salon_de_baile, Terraza};
 	private System.Random rnd = new System.Random(Guid.NewGuid().GetHashCode());
     [HideInInspector]
-    public SuspectsTable table ;
-	// Use this for initialization
-	void Awake () {
+    public SuspectsTable table;
+    public UnityEvent confEvSuggest;
+    public UnityEvent confEvAccuse;
+    public Text turnText;
+    public Text showCard;
+    private bool comingFromAccuse = false;
+
+    // Use this for initialization
+    void Awake () {
 		instance = this;
 		modalDialog.SetActive (false);
         accuseButton.gameObject.SetActive(false);
@@ -35,7 +43,9 @@ public class GameManager : MonoBehaviour {
 
 	void Start(){
 		this.Initialize();
-	}
+        turnText.text = "Active player: " + getPlayerActive().gameObject.name;
+        showCard.text = "";
+    }
 
 	// Update is called once per frame
 	void Update () {
@@ -62,8 +72,8 @@ public class GameManager : MonoBehaviour {
 
 	public void activeModalDialogReset()
 	{
-		modalDialog.SetActive (true);
-		modalDialog.GetComponent<Modal> ().setDialog (ResetDialog);
+		modalDialog.SetActive(true);
+		modalDialog.GetComponent<Modal>().setDialog(ResetDialog);
 		modalsAreActive = true;
 	}
 
@@ -74,11 +84,24 @@ public class GameManager : MonoBehaviour {
 		modalsAreActive = true;
 	}
 
-	public void cancelModalDialog()
+    public void activeModalDialogAccuse()
+    {
+        modalDialog.SetActive(true);
+        modalDialog.GetComponent<Modal>().setDialog(AccuseDialog);
+        modalsAreActive = true;
+    }
+
+    public void cancelModalDialog()
 	{
 		modalDialog.SetActive (false);
 		modalsAreActive = false;
-	}
+
+        if (comingFromAccuse)
+        {
+            GameManager.instance.changeTurn(getPlayerActive().order);
+            comingFromAccuse = true;
+        }
+    }
 
 	public void Quit()
 	{
@@ -157,12 +180,17 @@ public class GameManager : MonoBehaviour {
 		this.setPlayerActive (players [nOrder]);
 
 		players [nOrder].Activate ();
-	}
+
+        turnText.text = "Active player: " + getPlayerActive().gameObject.name;
+
+        
+    }
 
 	public void makeAccusation(DeckManager.DeckElements e, int index)
 	{
 		this.acc[index] = e;
 		this.acc[0] = (DeckManager.DeckElements)this.getPlayerActive().getActualCas().getType();
+
         /*print(".....");
 		foreach (DeckManager.DeckElements a in this.acc)
 		{
@@ -174,6 +202,16 @@ public class GameManager : MonoBehaviour {
             this.acc[2] >= DeckManager.DeckElements.Candelabro) //acusacion valida
         {
             accuseButton.gameObject.SetActive(true);
+            ColorBlock colors = accuseButton.colors;
+            colors.normalColor = Color.green;
+            colors.highlightedColor = Color.green;
+            colors.pressedColor = Color.green;
+            accuseButton.colors = colors;
+
+            this.accuseText.text = "Suggest";
+
+            accuseButton.onClick.RemoveAllListeners();
+            accuseButton.onClick.AddListener(confEvSuggest.Invoke);
         }
 
     }
@@ -197,7 +235,23 @@ public class GameManager : MonoBehaviour {
             i++;
         }
 
-        print("Puedo acusar? " + canAccuse);
+        if (canAccuse)
+        {
+            ColorBlock colors = accuseButton.colors;
+            colors.normalColor = Color.red;
+            colors.highlightedColor = Color.red;
+            colors.pressedColor = Color.red;
+            accuseButton.colors = colors;
+
+            this.accuseText.text = "Accuse";
+            comingFromAccuse = true; //va a haber bug si le da al resetGame sin darle a acusar equisde
+            accuseButton.onClick.RemoveAllListeners();
+            accuseButton.onClick.AddListener(confEvAccuse.Invoke);
+        }
+        else
+        {
+            GameManager.instance.changeTurn(getPlayerActive().order);
+        }
     }
 
 	public int getRows(){
@@ -207,4 +261,22 @@ public class GameManager : MonoBehaviour {
 	public int getCols(){
 		return this.tablero.getCols ();
 	}
+
+    public void Accuse()
+    {
+        print("Acusando");
+
+        if(this.acc[0] == (DeckManager.DeckElements)deckManager.GetSolution()[0] && 
+            this.acc[1] == (DeckManager.DeckElements)deckManager.GetSolution()[1] && this.acc[2] == (DeckManager.DeckElements)deckManager.GetSolution()[2])
+        {
+            print("WIN WIN");
+        }
+        else
+        {
+            this.getPlayerActive().setEliminado(true);
+        }
+
+        cancelModalDialog();
+        GameManager.instance.changeTurn(getPlayerActive().order);
+    }
 }

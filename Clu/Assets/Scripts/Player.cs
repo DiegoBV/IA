@@ -12,6 +12,7 @@ public class Player : MonoBehaviour {
 	private List<DeckManager.DeckElements> myCards;
 	private List<Sospechoso> suspInPlace;
     private List<DeckManager.DeckElements> discoveredCards;
+    private bool eliminado = false;
     
 
 	// Use this for initialization
@@ -87,7 +88,11 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Activate(){ //garbage
-        if (!UserControlled)
+        if (eliminado)
+        {
+            GameManager.instance.changeTurn(this.order);
+        }
+        else if (!UserControlled)
         {
             Invoke("BotBehaviour", 3);
         }
@@ -102,16 +107,22 @@ public class Player : MonoBehaviour {
             {
                 //comunicarle carta al jugador
                 p.addCard(d);
+                if (GameManager.instance.getPlayerActive().UserControlled)
+                    GameManager.instance.showCard.text = this.name + " showed you this card: \n \n" + d;
                 canAccuse = false;
             }
             else if(acc[1] == d && canAccuse)
             {
                 p.addCard(d);
+                if(GameManager.instance.getPlayerActive().UserControlled)
+                    GameManager.instance.showCard.text = this.name + " showed you this card: \n \n" + d;
                 canAccuse = false;
             }
             else if(acc[2] == d && canAccuse)
             {
                 p.addCard(d);
+                if (GameManager.instance.getPlayerActive().UserControlled)
+                    GameManager.instance.showCard.text = this.name + " showed you this card: \n \n" + d;
                 canAccuse = false;
             }
 
@@ -152,6 +163,23 @@ public class Player : MonoBehaviour {
     public bool userControlled()
     {
         return this.UserControlled;
+    }
+
+    public bool getEliminado()
+    {
+        return eliminado;
+    }
+
+    public void setEliminado(bool b)
+    {
+        eliminado = b;
+
+        if (eliminado)
+        {
+            Renderer rend = GetComponent<Renderer>();
+            rend.enabled = true;
+            rend.material.SetColor("_Color", Color.grey);
+        }
     }
 
     public void addCard(DeckManager.DeckElements d)
