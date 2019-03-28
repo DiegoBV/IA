@@ -39,8 +39,8 @@ public class Sospechoso : MonoBehaviour {
 					cas = l[c];
 				} while (cas.getOcupada ());
 
-				GameManager.instance.MoveTo (this.gameObject, this.getActualCas(), cas);
 				setActualCas(cas);
+				GameManager.instance.MoveTo (this.gameObject, this.getActualCas(), cas);
 				this.Accuse ();
 			}
 

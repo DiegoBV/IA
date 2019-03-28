@@ -15,6 +15,8 @@ public class ActivateSuspectsButtons : MonoBehaviour {
 
 	public void Activate(){
 		List<Sospechoso> l = GameManager.instance.getPlayerActive ().getSuspectsInPlace ();
+        print("HEHEHEH: " + l.Count);
+        
 
 		foreach (GameObject element in buttons) {
 			element.SetActive (false);

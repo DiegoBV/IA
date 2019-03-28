@@ -11,7 +11,7 @@ public class Player : MonoBehaviour {
 	private Casilla actualCas = null;
 	private List<DeckManager.DeckElements> myCards;
 	private List<Sospechoso> suspInPlace;
-
+    private List<DeckManager.DeckElements> discoveredCards;
     
 
 	// Use this for initialization
@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
 			rend.enabled = true;
 			rend.material.SetColor("_Color", Color.black);
 		}
+
+        discoveredCards = new List<DeckManager.DeckElements>();
     }
 
 	public void Initialize(){
@@ -49,7 +51,6 @@ public class Player : MonoBehaviour {
 			GameManager.instance.MoveTo (this.gameObject, actualCas, cas);
 			actualCas = cas;
 
-			suspInPlace = GameManager.instance.IsSomeoneInMyPlace ((GameManager.Place)actualCas.getType ());
 			print("Hay " + suspInPlace.Count + " sospechosos conmigo");
 
 			//comprobar cosas......
@@ -92,6 +93,33 @@ public class Player : MonoBehaviour {
         }
 	}
 
+    public bool checkSuggestion(DeckManager.DeckElements[] acc, Player p)
+    {
+        bool canAccuse = true;
+        foreach(DeckManager.DeckElements d in myCards)
+        {
+            if(acc[0] == d && canAccuse)
+            {
+                //comunicarle carta al jugador
+                p.addCard(d);
+                canAccuse = false;
+            }
+            else if(acc[1] == d && canAccuse)
+            {
+                p.addCard(d);
+                canAccuse = false;
+            }
+            else if(acc[2] == d && canAccuse)
+            {
+                p.addCard(d);
+                canAccuse = false;
+            }
+
+        }
+
+        return canAccuse;
+    }
+
     private void BotBehaviour()
     {
         bool test = true;
@@ -124,5 +152,13 @@ public class Player : MonoBehaviour {
     public bool userControlled()
     {
         return this.UserControlled;
+    }
+
+    public void addCard(DeckManager.DeckElements d)
+    {
+        print("ADDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" + "          " + d);
+        myCards.Add(d);
+        GameManager.instance.table.CheckElem(GetComponent<SuspectList>().checkElement(d), order);
+        
     }
 }

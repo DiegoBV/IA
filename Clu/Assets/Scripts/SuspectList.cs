@@ -19,40 +19,46 @@ public class SuspectList : MonoBehaviour {
         this.numElem_ = numElem;
         this.difElem_ = difElem;
 
-        suspetcs = new bool[difElem_[0]];
-        weapons = new bool[difElem_[1]];
-        rooms = new bool[difElem_[2]];
-        int index = 0;
+        rooms = new bool[difElem_[0]];
+        suspetcs = new bool[difElem_[1]];
+        weapons = new bool[difElem_[2]];
 
-        for (int i = 0; i < rooms.Length; i++)
+       for(int i = 0; i < deck.Count; i++)
         {
-            if ((int)deck[index] < difElem_[0])
+            if((int)deck[i] < difElem[0])
             {
-                suspetcs[(int)deck[index]] = true;
-                index++;
+                rooms[(int)deck[i]] = true;
             }
-            else i = suspetcs.Length;
-        }
-        for (int i = 0; i < suspetcs.Length; i++)
-        {
-            if ((int)deck[index] < difElem_[1])
+            else if ((int)deck[i] < difElem[0] + difElem[1])
             {
-                suspetcs[(int)deck[index] - difElem_[0]] = true;
-                index++;
+                suspetcs[(int)deck[i] - (int)difElem[0]] = true;
             }
-            else i = suspetcs.Length;
-        }
-        for (int i = 0; i < weapons.Length; i++)
-        {
-            if ((int)deck[index] < difElem_[2])
+            else 
             {
-                suspetcs[(int)deck[index] - (difElem_[0] + difElem_[1])] = true;
-                index++;
+                weapons[(int)deck[i] - (int)difElem[0] - (int)difElem[1]] = true;
             }
-            else i = suspetcs.Length;
         }
     }
 
+    public int[] checkElement(DeckManager.DeckElements d)
+    {
+        if ((int)d < difElem_[0])
+        {
+            rooms[(int)d] = true;
+            return new int[] { 0, (int)d };
+        }
+        else if ((int)d < difElem_[0] + difElem_[1])
+        {
+            suspetcs[(int)d - (int)difElem_[0]] = true;
+            return new int[] { 1, (int)d - (int)difElem_[0] };
+        }
+        else
+        {
+            weapons[(int)d - (int)difElem_[0] - (int)difElem_[1]] = true;
+            return new int[] { 2, (int)d - (int)difElem_[0] - (int)difElem_[1] };
+        }
+
+    }
     public bool[] getSuspetcs()
     {
         return suspetcs;

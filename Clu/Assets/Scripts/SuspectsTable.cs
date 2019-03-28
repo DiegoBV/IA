@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SuspectsTable : MonoBehaviour {
 
@@ -10,10 +11,6 @@ public class SuspectsTable : MonoBehaviour {
 
     public GameObject TheBigTable;
 
-    public GameObject roomTable;
-    public GameObject murdererTable;
-    public GameObject weaponTable;
-
     public GameObject[] PButtons = new GameObject[3];
 
     public GameObject[] SmrtButtons = new GameObject[3];
@@ -22,38 +19,74 @@ public class SuspectsTable : MonoBehaviour {
 
     bool flag = false;
 
-    private void Start()
-    {
-        p1_ = new bool[3][];
-        p2_ = new bool[3][];
-        p3_ = new bool[3][];
-    }
-
     public void initialize(Player p1, Player p2, Player p3)
     {
-        p1_[0] = p1.GetSuspectList().rooms;
-        p1_[1] = p1.GetSuspectList().suspetcs;
-        p1_[2] = p1.GetSuspectList().weapons;
+        p1_ = new bool[][] { p1.GetSuspectList().rooms, p1.GetSuspectList().suspetcs, p1.GetSuspectList().weapons };
 
-        p2_[0] = p2.GetSuspectList().rooms;
-        p2_[1] = p2.GetSuspectList().suspetcs;
-        p2_[2] = p2.GetSuspectList().weapons;
+        p2_ = new bool[][] { p2.GetSuspectList().rooms, p2.GetSuspectList().suspetcs, p2.GetSuspectList().weapons };
 
-        p3_[0] = p3.GetSuspectList().rooms;
-        p3_[1] = p3.GetSuspectList().suspetcs;
-        p3_[2] = p3.GetSuspectList().weapons;
+        p3_ = new bool[][] { p3.GetSuspectList().rooms, p3.GetSuspectList().suspetcs, p3.GetSuspectList().weapons };
+
+        visualize(p1_, PButtons);
+        visualize(p2_, SmrtButtons);
+        visualize(p3_, DumButtons);
+
     }
 
     
-    public void visualize()
+    public void visualize(bool[][] player, GameObject[] ticks)
     {
-
+        for (int j = 0; j < 3; j++)
+        {
+            for (int i = 0; i < player[j].Length; i++)
+            {
+                if (player[j][i])
+                {
+                    foreach (Transform transform in ticks[j].transform)
+                    {
+                        if (transform.gameObject.name == (i + 1).ToString())
+                        {
+                            transform.gameObject.GetComponent<Image>().color = new Color(255, 0, 0);
+                        }
+                    }
+                }
+            }
+        }
     }
+
+    public void CheckElem(int[] pos, int ord)
+    {
+        GameObject[] ticks = new GameObject[0];
+        switch (ord)
+        {
+            case 0:
+                ticks = PButtons;
+                break;
+            case 1:
+                ticks = SmrtButtons;
+                break;
+            case 2:
+                ticks = DumButtons;
+                break;
+        }
+
+        print("TICKS ===>" + ord + "TYPE ============>" + pos[0] + "ELEM===========>" + pos[1]);
+
+        foreach (Transform transform in ticks[pos[0]].transform)
+        {
+            if (transform.gameObject.name == (pos[1] + 1).ToString())
+            {
+                transform.gameObject.GetComponent<Image>().color = new Color(0, 255, 255);
+            }
+        }
+    }
+
 
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
+            
             flag = !flag;
             TheBigTable.SetActive(flag);
         }

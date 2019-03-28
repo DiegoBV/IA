@@ -23,13 +23,15 @@ public class GameManager : MonoBehaviour {
 	[HideInInspector] public enum Place {Biblioteca, Cocina, Comedor, Estudio, Pasillo,
 		Recibidor, Sala_del_billar, Salon_de_baile, Terraza};
 	private System.Random rnd = new System.Random(Guid.NewGuid().GetHashCode());
-
-    SuspectsTable table ;
+    [HideInInspector]
+    public SuspectsTable table ;
 	// Use this for initialization
 	void Awake () {
 		instance = this;
 		modalDialog.SetActive (false);
-	}
+        accuseButton.gameObject.SetActive(false);
+        table = GetComponent<SuspectsTable>();
+    }
 
 	void Start(){
 		this.Initialize();
@@ -48,7 +50,6 @@ public class GameManager : MonoBehaviour {
 			element.Initialize ();
 
 
-        table = new SuspectsTable();
         table.initialize(players[0], players[1], players[2]);
         accuseButton.gameObject.SetActive(false);
     }
@@ -135,6 +136,8 @@ public class GameManager : MonoBehaviour {
 
 		destCas.setOcupada (true);
 		orCas.setOcupada (false);
+
+        this.getPlayerActive().setSuspectsInPlace(this.IsSomeoneInMyPlace((GameManager.Place)destCas.getType()));
 	}
 
 	public void changeTurn(int order){
@@ -179,6 +182,22 @@ public class GameManager : MonoBehaviour {
     {
         //mandar mensaje a todos para comprobar las demas cartar
         Debug.Log("Mandando mensaje, sugerencia: " + this.acc[0] + ", " + this.acc[1] + ", " + this.acc[2]);
+
+        bool canAccuse = true;
+        //acceder a los jugadores no activos y preguntar por sus cartas
+        int i = 0;
+
+        while (i < players.Length && canAccuse)
+        {
+            if (!players[i].isMyTurn())
+            {
+                canAccuse = players[i].checkSuggestion(this.acc, this.getPlayerActive());
+            }
+
+            i++;
+        }
+
+        print("Puedo acusar? " + canAccuse);
     }
 
 	public int getRows(){
