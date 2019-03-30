@@ -7,12 +7,14 @@ public class Player : MonoBehaviour {
 
 	public bool UserControlled;
 	public int order;
+    public int numMaxActions;
 	private bool myTurn = false;
 	private Casilla actualCas = null;
 	private List<DeckManager.DeckElements> myCards;
 	private List<Sospechoso> suspInPlace;
     private List<DeckManager.DeckElements> discoveredCards;
     private bool eliminado = false;
+    private int currNumActions = 0;
     
 
 	// Use this for initialization
@@ -47,7 +49,7 @@ public class Player : MonoBehaviour {
 
     public bool Move(Position p){
 		Casilla cas = GameManager.instance.getCasilla (p);
-		if(myTurn && !cas.getOcupada()){
+		if(myTurn && !cas.getOcupada() && currNumActions < numMaxActions){
 			print ("dandole wey");
 			GameManager.instance.MoveTo (this.gameObject, actualCas, cas);
 			actualCas = cas;
@@ -58,6 +60,10 @@ public class Player : MonoBehaviour {
 			if (suspInPlace.Count == 0 || !UserControlled) { //testeo
 				GameManager.instance.changeTurn (this.order);
 			}
+            else
+            {
+                currNumActions++;
+            }
 		}
 
 		return cas.getOcupada ();
@@ -96,6 +102,8 @@ public class Player : MonoBehaviour {
         {
             Invoke("BotBehaviour", 3);
         }
+
+        currNumActions = 0;
 	}
 
     public bool checkSuggestion(DeckManager.DeckElements[] acc, Player p)
@@ -188,5 +196,15 @@ public class Player : MonoBehaviour {
         myCards.Add(d);
         GameManager.instance.table.CheckElem(GetComponent<SuspectList>().checkElement(d), order);
         
+    }
+
+    public void increaseCount()
+    {
+        this.currNumActions++;
+    }
+
+    public int getCurrNumAct()
+    {
+        return this.currNumActions;
     }
 }

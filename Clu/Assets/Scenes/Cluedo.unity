@@ -506,6 +506,11 @@ Prefab:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 114267934229094264, guid: f148606b9dd47cd498b8758dbdceb2c9,
+        type: 2}
+      propertyPath: numMaxActions
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f148606b9dd47cd498b8758dbdceb2c9, type: 2}
   m_IsPrefabAsset: 0
@@ -3087,7 +3092,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &357817517
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4094,6 +4099,7 @@ MonoBehaviour:
   - {fileID: 1550094026}
   - {fileID: 736302908}
   - {fileID: 279508870}
+  SpyLayer: {fileID: 0}
 --- !u!1 &459974805
 GameObject:
   m_ObjectHideFlags: 0
@@ -8886,7 +8892,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 72.045, y: -29.6}
+  m_AnchoredPosition: {x: 72.045, y: 82}
   m_SizeDelta: {x: 144.09, y: 90.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1088048807
@@ -12133,6 +12139,11 @@ Prefab:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 114267934229094264, guid: f148606b9dd47cd498b8758dbdceb2c9,
+        type: 2}
+      propertyPath: numMaxActions
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f148606b9dd47cd498b8758dbdceb2c9, type: 2}
   m_IsPrefabAsset: 0
@@ -14738,6 +14749,11 @@ Prefab:
     - target: {fileID: 1525941258016712, guid: f148606b9dd47cd498b8758dbdceb2c9, type: 2}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 114267934229094264, guid: f148606b9dd47cd498b8758dbdceb2c9,
+        type: 2}
+      propertyPath: numMaxActions
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f148606b9dd47cd498b8758dbdceb2c9, type: 2}

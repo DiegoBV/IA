@@ -26,7 +26,7 @@ public class Sospechoso : MonoBehaviour {
 		if (GameManager.instance.CanInteract ()) {
 			Player playerActive = GameManager.instance.getPlayerActive ();
 
-			if (playerActive.GetPlace () != (GameManager.Place) this.getActualCas ().getType()) { //si no es la misma instancia...
+			if (playerActive.getCurrNumAct() < playerActive.numMaxActions && playerActive.GetPlace () != (GameManager.Place) this.getActualCas ().getType()) { //si no es la misma instancia...
 				//move to a random block
 				List<Casilla> l = GameManager.instance.getCasillasInPlace ((GameManager.Place) playerActive.GetPlace ());
 
@@ -43,6 +43,7 @@ public class Sospechoso : MonoBehaviour {
 				setActualCas(cas);
 				GameManager.instance.MoveTo (this.gameObject, prevCas, cas);
 				this.Accuse ();
+                playerActive.increaseCount();
 			}
 
 		}
