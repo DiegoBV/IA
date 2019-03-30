@@ -17,6 +17,9 @@ public class SuspectsTable : MonoBehaviour {
 
     public GameObject[] DumButtons = new GameObject[3];
 
+    public GameObject SpyLayer;
+    bool spyFlag = true;
+
     bool flag = false;
 
     public void initialize(Player p1, Player p2, Player p3)
@@ -90,5 +93,11 @@ public class SuspectsTable : MonoBehaviour {
             flag = !flag;
             TheBigTable.SetActive(flag);
         }
+    }
+
+    public void Spy()
+    {
+        spyFlag = !spyFlag;
+        SpyLayer.SetActive(spyFlag);
     }
 }
