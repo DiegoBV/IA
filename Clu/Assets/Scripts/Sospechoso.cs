@@ -17,7 +17,8 @@ public class Sospechoso : MonoBehaviour {
 
 	public bool OnMouseUpAsButton () {
 		Accuse ();
-		CallSuspect ();
+        if(GameManager.instance.getPlayerActive().UserControlled)
+		    CallSuspect ();
 		return true;
 	}
 
@@ -39,8 +40,8 @@ public class Sospechoso : MonoBehaviour {
 					cas = l[c];
 				} while (cas.getOcupada ());
 
-				setActualCas(cas);
 				GameManager.instance.MoveTo (this.gameObject, this.getActualCas(), cas);
+				setActualCas(cas);
 				this.Accuse ();
 			}
 

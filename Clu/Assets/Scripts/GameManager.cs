@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour {
     public UnityEvent confEvAccuse;
     public Text turnText;
     public Text showCard;
+    public GameObject[] panels;
     private bool comingFromAccuse = false;
 
     // Use this for initialization
@@ -153,6 +154,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void MoveTo(GameObject o, Casilla orCas, Casilla destCas){
+        resetAccusation();
 		o.transform.position = new Vector3 (destCas.transform.position.x, 
 			destCas.transform.position.y + destCas.transform.localScale.y / 2, 
 			destCas.transform.position.z);
@@ -164,8 +166,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void changeTurn(int order){
-        for (int i = 0; i < this.acc.GetLength(0); i++) // reinicio de la acusacion
-            this.acc[0] = 0;
+        resetAccusation();
 
         accuseButton.gameObject.SetActive(false);
 
@@ -182,8 +183,22 @@ public class GameManager : MonoBehaviour {
 		players [nOrder].Activate ();
 
         turnText.text = "Active player: " + getPlayerActive().gameObject.name;
+    }
 
-        
+    private void resetAccusation()
+    {
+        for (int i = 0; i < this.acc.GetLength(0); i++) // reinicio de la acusacion
+            this.acc[i] = 0;
+
+        foreach (GameObject p in panels)
+        {
+            p.SetActive(false);
+            foreach (Transform child in p.transform)
+            {
+                child.GetComponent<AccButton>().reset();
+            }
+        }
+        accuseButton.gameObject.SetActive(false);
     }
 
 	public void makeAccusation(DeckManager.DeckElements e, int index)

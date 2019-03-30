@@ -1026,6 +1026,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 1785751024}
+  c: {r: 0, g: 0.7287984, b: 1, a: 0.8039216}
 --- !u!114 &77482754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1334,6 +1336,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 1785751024}
+  c: {r: 0, g: 0.7287984, b: 1, a: 0.8039216}
 --- !u!114 &125370725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2999,8 +3003,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.2028302, g: 1, b: 0.72078025, a: 1}
-    m_HighlightedColor: {r: 0, g: 1, b: 0.19680619, a: 1}
-    m_PressedColor: {r: 0.3873124, g: 1, b: 0, a: 1}
+    m_HighlightedColor: {r: 0, g: 0.7674589, b: 1, a: 1}
+    m_PressedColor: {r: 0, g: 1, b: 0.9717827, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3521,6 +3525,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 737386628}
+  c: {r: 1, g: 0.28773582, b: 0.7563163, a: 0.8039216}
 --- !u!114 &419601538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4047,6 +4053,9 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   turnText: {fileID: 1531746275}
   showCard: {fileID: 1088048807}
+  panels:
+  - {fileID: 737386628}
+  - {fileID: 1785751024}
 --- !u!4 &441858575
 Transform:
   m_ObjectHideFlags: 0
@@ -4234,6 +4243,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 1785751024}
+  c: {r: 0, g: 0.7287984, b: 1, a: 0.8039216}
 --- !u!114 &478829355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5718,7 +5729,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 737386628}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -7027,6 +7038,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 737386628}
+  c: {r: 1, g: 0.28773582, b: 0.7563163, a: 0.8039216}
 --- !u!114 &888326757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7392,6 +7405,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 737386628}
+  c: {r: 1, g: 0.28773582, b: 0.7563163, a: 0.8039216}
 --- !u!114 &917657423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7694,6 +7709,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 1785751024}
+  c: {r: 0, g: 0.7287984, b: 1, a: 0.8039216}
 --- !u!114 &955806719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9500,6 +9517,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 1785751024}
+  c: {r: 0, g: 0.7287984, b: 1, a: 0.8039216}
 --- !u!114 &1114229140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10135,6 +10154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 737386628}
+  c: {r: 1, g: 0.28773582, b: 0.7563163, a: 0.8039216}
 --- !u!114 &1172664666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13688,6 +13709,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 737386628}
+  c: {r: 1, g: 0.28773582, b: 0.7563163, a: 0.8039216}
 --- !u!114 &1605641625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14976,6 +14999,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 737386628}
+  c: {r: 1, g: 0.28773582, b: 0.7563163, a: 0.8039216}
 --- !u!114 &1727283625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15724,7 +15749,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1785751024}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -17972,6 +17997,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   index: 0
+  parent: {fileID: 1785751024}
+  c: {r: 0, g: 0.7287984, b: 1, a: 0.8039216}
 --- !u!114 &2146973450
 MonoBehaviour:
   m_ObjectHideFlags: 0
