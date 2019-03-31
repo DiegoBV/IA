@@ -194,8 +194,7 @@ public class Player : MonoBehaviour {
     {
         print("ADDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" + "          " + d);
         myCards.Add(d);
-        GameManager.instance.table.CheckElem(GetComponent<SuspectList>().checkElement(d), order);
-        
+        GameManager.instance.table.CheckElem(GetComponent<SuspectList>().checkElement(d), order);      
     }
 
     public void increaseCount()
