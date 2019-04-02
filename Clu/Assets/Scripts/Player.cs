@@ -141,15 +141,23 @@ public class Player : MonoBehaviour {
 
     private void BotBehaviour()
     {
-        bool test = true;
-        do
+        DumbIA cmp = this.GetComponent<DumbIA>();
+        if(cmp != null)
         {
-            System.Random rnd = GameManager.instance.getRandomSeed();
-            int x = rnd.Next(0, GameManager.instance.getRows());
-            int y = rnd.Next(0, GameManager.instance.getCols());
-            Position p = new Position(x, y);
-            test = this.Move(p);
-        } while (test);
+            cmp.Act(this);
+        }
+        else
+        {
+            bool test = true;
+            do
+            {
+                System.Random rnd = GameManager.instance.getRandomSeed();
+                int x = rnd.Next(0, GameManager.instance.getRows());
+                int y = rnd.Next(0, GameManager.instance.getCols());
+                Position p = new Position(x, y);
+                test = this.Move(p);
+            } while (test);
+        }
     }
 
 	public Casilla getActualCas(){

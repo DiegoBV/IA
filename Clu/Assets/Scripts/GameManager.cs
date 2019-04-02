@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
     public Text showCard;
     public GameObject[] panels;
     private bool comingFromAccuse = false;
-
+    
     // Use this for initialization
     void Awake () {
 		instance = this;
