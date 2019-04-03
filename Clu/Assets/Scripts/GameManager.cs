@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
     public Text showCard;
     public GameObject[] panels;
     private bool comingFromAccuse = false;
+    int currOrder = 0;
     
     // Use this for initialization
     void Awake () {
@@ -170,17 +171,17 @@ public class GameManager : MonoBehaviour {
 
         accuseButton.gameObject.SetActive(false);
 
-        players[order].setMyTurn(false);
+        players[currOrder].setMyTurn(false);
 
-		int nOrder = order + 1;
-        if (nOrder >= players.GetLength(0))
+		currOrder ++;
+        if (currOrder >= players.GetLength(0))
         {
-            nOrder = 0;
+            currOrder = 0;
         }
 
-		this.setPlayerActive (players [nOrder]);
+		this.setPlayerActive (players [currOrder]);
 
-		players [nOrder].Activate ();
+		players [currOrder].Activate ();
 
         turnText.text = "Active player: " + getPlayerActive().gameObject.name;
     }

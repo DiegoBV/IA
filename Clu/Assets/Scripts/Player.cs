@@ -57,7 +57,7 @@ public class Player : MonoBehaviour {
 			print("Hay " + suspInPlace.Count + " sospechosos conmigo");
 
 			//comprobar cosas......
-			if (suspInPlace.Count == 0 || !UserControlled) { //testeo
+			if (suspInPlace.Count == 0) { //testeo
 				GameManager.instance.changeTurn (this.order);
 			}
             else
