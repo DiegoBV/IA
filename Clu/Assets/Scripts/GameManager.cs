@@ -171,17 +171,17 @@ public class GameManager : MonoBehaviour {
 
         accuseButton.gameObject.SetActive(false);
 
-        players[currOrder].setMyTurn(false);
+        players[order].setMyTurn(false);
 
-		currOrder ++;
-        if (currOrder >= players.GetLength(0))
+        int nOrder = order + 1;
+        if (nOrder >= players.GetLength(0))
         {
-            currOrder = 0;
+            nOrder = 0;
         }
 
-		this.setPlayerActive (players [currOrder]);
+		this.setPlayerActive (players [nOrder]);
 
-		players [currOrder].Activate ();
+		players [nOrder].Activate ();
 
         turnText.text = "Active player: " + getPlayerActive().gameObject.name;
     }

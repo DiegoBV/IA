@@ -69,12 +69,11 @@ public class DumbIA : MonoBehaviour {
                 (DeckManager.DeckElements)(s.getType() + (int)GameManager.Place.Terraza + 1) + " " + (DeckManager.DeckElements)(arma + (int)DeckManager.DeckElements.Cnel_Rubio + 1) + " ";
             GameManager.instance.Suggest();
         }
-        else
+        else if(l.Count > 0)
         {
             //pasa turno
             GameManager.instance.changeTurn(p.order);
         }
-
     }
 
     private void moveToRandom(Player pl)

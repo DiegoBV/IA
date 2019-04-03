@@ -102,7 +102,7 @@ public class Player : MonoBehaviour {
         {
             Invoke("BotBehaviour", 3);
         }
-
+        myTurn = true;
         currNumActions = 0;
 	}
 
