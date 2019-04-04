@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour {
 	{
         modalDialog.SetActive(false);
         modalsAreActive = false;
+        table.reset();
         this.Initialize (); //no memory worries
 	}
 

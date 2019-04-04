@@ -100,4 +100,53 @@ public class SuspectsTable : MonoBehaviour {
         spyFlag = !spyFlag;
         SpyLayer.SetActive(spyFlag);
     }
+
+    public void reset()
+    {
+        spyFlag = true;
+        //ARRAY
+        for (int i = 0; i < p1_.Length; i++){
+            for(int j = 0; j < p1_[i].Length;j++)
+            {
+                p1_[i][j] = false;
+            }
+        }
+        for (int i = 0; i < p2_.Length; i++)
+        {
+            for (int j = 0; j < p2_[i].Length; j++)
+            {
+                p2_[i][j] = false;
+            }
+        }
+        for (int i = 0; i < p3_.Length; i++)
+        {
+            for (int j = 0; j < p3_[i].Length; j++)
+            {
+                p3_[i][j] = false;
+            }
+        }
+        //BOTONES
+        for (int i = 0; i < PButtons.Length; i++)
+        {
+            foreach (Transform transform in PButtons[i].transform)
+            {
+                transform.gameObject.GetComponent<Image>().color = new Color(0, 255, 0);
+            }
+        }
+        for (int i = 0; i < SmrtButtons.Length; i++)
+        {
+            foreach (Transform transform in SmrtButtons[i].transform)
+            {
+                transform.gameObject.GetComponent<Image>().color = new Color(0, 255, 0);
+            }
+        }
+        for (int i = 0; i < DumButtons.Length; i++)
+        {
+            foreach (Transform transform in DumButtons[i].transform)
+            {
+                transform.gameObject.GetComponent<Image>().color = new Color(0, 255, 0);
+            }
+        }
+
+    }
 }
