@@ -64,12 +64,16 @@ public class GameManager : MonoBehaviour {
 
         table.initialize(players[0], players[1], players[2]);
         accuseButton.gameObject.SetActive(false);
+        showCard.text = "";
+        turnText.text = "Active player: " + getPlayerActive().gameObject.name;
+        GameManager.instance.changeTurn(3);
     }
 
 	public void resetGame()
 	{
-		this.Initialize (); //no memory worries
-		cancelModalDialog();
+        modalDialog.SetActive(false);
+        modalsAreActive = false;
+        this.Initialize (); //no memory worries
 	}
 
 	public void activeModalDialogReset()
@@ -232,7 +236,7 @@ public class GameManager : MonoBehaviour {
 
     }
 
-    public void Suggest() //boton
+    public void Suggest(out bool b) //boton
     {
         //mandar mensaje a todos para comprobar las demas cartar
         Debug.Log("Mandando mensaje, sugerencia: " + this.acc[0] + ", " + this.acc[1] + ", " + this.acc[2]);
@@ -268,6 +272,14 @@ public class GameManager : MonoBehaviour {
         {
             GameManager.instance.changeTurn(getPlayerActive().order);
         }
+
+        b = canAccuse;
+    }
+
+    public void SuggestButton()
+    {
+        bool b = false;
+        this.Suggest(out b);
     }
 
 	public int getRows(){
@@ -286,13 +298,14 @@ public class GameManager : MonoBehaviour {
             this.acc[1] == (DeckManager.DeckElements)deckManager.GetSolution()[1] && this.acc[2] == (DeckManager.DeckElements)deckManager.GetSolution()[2])
         {
             print("WIN WIN");
+            showCard.text = getPlayerActive().name + " WINS!!!!";
+            Invoke("resetGame", 5);
         }
         else
         {
             this.getPlayerActive().setEliminado(true);
+            cancelModalDialog();
+            GameManager.instance.changeTurn(getPlayerActive().order);
         }
-
-        cancelModalDialog();
-        GameManager.instance.changeTurn(getPlayerActive().order);
     }
 }

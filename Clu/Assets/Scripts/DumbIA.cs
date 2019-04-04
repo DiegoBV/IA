@@ -67,7 +67,9 @@ public class DumbIA : MonoBehaviour {
             GameManager.instance.makeAccusation((DeckManager.DeckElements)(arma + (int)DeckManager.DeckElements.Cnel_Rubio + 1), 2);
             GameManager.instance.showCard.text = this.gameObject.name + " suggests: " + (DeckManager.DeckElements)GameManager.instance.getPlayerActive().getActualCas().getType() + " " + 
                 (DeckManager.DeckElements)(s.getType() + (int)GameManager.Place.Terraza + 1) + " " + (DeckManager.DeckElements)(arma + (int)DeckManager.DeckElements.Cnel_Rubio + 1) + " ";
-            GameManager.instance.Suggest();
+            bool b = false;
+            GameManager.instance.Suggest(out b);
+            if (b) { GameManager.instance.Accuse(); }
         }
         else if(l.Count > 0)
         {
