@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour {
         accuseButton.gameObject.SetActive(false);
         showCard.text = "";
         turnText.text = "Active player: " + getPlayerActive().gameObject.name;
-        GameManager.instance.changeTurn(3);
+        GameManager.instance.changeTurn(2);
     }
 
 	public void resetGame()

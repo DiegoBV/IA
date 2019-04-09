@@ -10,7 +10,7 @@ public class SmartIA : MonoBehaviour
     {
         System.Random rnd = GameManager.instance.getRandomSeed();
 
-        if (!p.getMyCards().Contains((DeckManager.DeckElements)(p.getActualCas().getType())))
+       /* if (!p.getMyCards().Contains((DeckManager.DeckElements)(p.getActualCas().getType())))
         {
             bool test = true;
             do
@@ -21,28 +21,37 @@ public class SmartIA : MonoBehaviour
                 test = p.Move(po);
             } while (test);
         }
-        else
+        else*/
         {
             //mueve a una que no tenga (preferiblemente con gente)
             //mueve
             DeckManager.DeckElements[] sol = checkOptions(p);
+            int sos, wep;
+                moveTo(p, sol[0]);
             if(sol[0] != sol[1])
             {
-                moveTo(p, sol[0]);
-                GameManager.instance.makeAccusation((DeckManager.DeckElements)
-                    (sol[1]), 1);
-                chooseWeapon(p);
+                sos = (int)sol[1];
             }
             else
             {
-                int s = call(p); //llama al primer sospechoso que no tenga
-                GameManager.instance.makeAccusation((DeckManager.DeckElements)
-                    (s), 1);
-                chooseWeapon(p);
+                List<Sospechoso> l =
+                    GameManager.instance.IsSomeoneInMyPlace((GameManager.Place)sol[0]);
+                //ACUSAR A JUGADOR EN MAZO INICIAL
+                if (l.Count > 0)
+                {
+                    sos = l[0].getType() + (int)DeckManager.DeckElements.Terraza + 1;
+
+                }
+                else return;
             }
+                wep = chooseWeapon(p);
             //acuse
+            GameManager.instance.makeAccusation((DeckManager.DeckElements) (sos), 1);
+            GameManager.instance.makeAccusation((DeckManager.DeckElements) wep, 2);
 
             bool b = false;
+            GameManager.instance.showCard.text = this.gameObject.name + " suggests: " + (DeckManager.DeckElements)GameManager.instance.getPlayerActive().getActualCas().getType() + " " +
+                (DeckManager.DeckElements)sos + " " + (DeckManager.DeckElements)wep + " ";
             GameManager.instance.Suggest(out b);
             if (b) { GameManager.instance.Accuse(); }
         }
@@ -102,12 +111,13 @@ public class SmartIA : MonoBehaviour
                 List<Sospechoso> l = 
                     GameManager.instance.IsSomeoneInMyPlace((GameManager.Place)index);
 
+                sol[0] = (DeckManager.DeckElements)index;
+                sol[1] = (DeckManager.DeckElements)index;
                 bool[] sospechosos = p.GetSuspectList().getSuspetcs();
                 foreach(Sospechoso s in l)
                 {
                     if (!sospechosos[s.getType()])
                     {
-                        sol[0] = (DeckManager.DeckElements)index;
                         sol[1] = (DeckManager.DeckElements)s.getType() 
                             + (int)DeckManager.DeckElements.Terraza + 1;
                         return sol;
@@ -123,7 +133,7 @@ public class SmartIA : MonoBehaviour
 
     private void moveTo(Player p, DeckManager.DeckElements room)
     {
-        bool test = true;
+        /*bool test = true;
         do
         {
             System.Random rnd = GameManager.instance.getRandomSeed();
@@ -135,7 +145,18 @@ public class SmartIA : MonoBehaviour
             {
                 test = false;
             }
-        } while (test);
+        } while (test);*/
+
+        List<Casilla> lst = GameManager.instance.tablero.getCasillasOfType((int)room);
+        
+        foreach(Casilla cas in lst)
+        {
+            if (!cas.getOcupada())
+            {
+                p.Move(cas.getPosition());
+                return;
+            }
+        }
     }
 
     private int call(Player p)
@@ -152,7 +173,7 @@ public class SmartIA : MonoBehaviour
         return sospechoso + (int)GameManager.Place.Terraza + 1;
     }
 
-    private void chooseWeapon(Player p)
+    private int chooseWeapon(Player p)
     {
         //arma
         int arma = -1;
@@ -162,7 +183,6 @@ public class SmartIA : MonoBehaviour
         } while (p.getMyCards().Contains((DeckManager.DeckElements)
             (arma + (int)DeckManager.DeckElements.Cnel_Rubio + 1)));
 
-        GameManager.instance.makeAccusation((DeckManager.DeckElements)
-            (arma + (int)DeckManager.DeckElements.Cnel_Rubio + 1), 2);
+        return (arma + (int)DeckManager.DeckElements.Cnel_Rubio + 1);
     }
 }
