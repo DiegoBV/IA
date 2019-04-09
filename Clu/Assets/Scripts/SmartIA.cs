@@ -41,6 +41,10 @@ public class SmartIA : MonoBehaviour
                 chooseWeapon(p);
             }
             //acuse
+
+            bool b = false;
+            GameManager.instance.Suggest(out b);
+            if (b) { GameManager.instance.Accuse(); }
         }
     }
 
