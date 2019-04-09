@@ -142,13 +142,15 @@ public class Player : MonoBehaviour {
     private void BotBehaviour()
     {
         DumbIA cmp = this.GetComponent<DumbIA>();
+        SmartIA sia = this.GetComponent<SmartIA>();
         if(cmp != null)
         {
             cmp.Act(this);
         }
-        else
+        else if(sia != null)
         {
-            bool test = true;
+            sia.Act(this);
+            /*bool test = true;
             do
             {
                 System.Random rnd = GameManager.instance.getRandomSeed();
@@ -156,7 +158,7 @@ public class Player : MonoBehaviour {
                 int y = rnd.Next(0, GameManager.instance.getCols());
                 Position p = new Position(x, y);
                 test = this.Move(p);
-            } while (test);
+            } while (test);*/
         }
     }
 
