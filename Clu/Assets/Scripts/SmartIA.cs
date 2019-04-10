@@ -8,25 +8,18 @@ public class SmartIA : MonoBehaviour
 
     public void Act(Player p)
     {
-        System.Random rnd = GameManager.instance.getRandomSeed();
+        int sos = 0, wep= 0;
 
-       /* if (!p.getMyCards().Contains((DeckManager.DeckElements)(p.getActualCas().getType())))
+        if (!p.getMyCards().Contains((DeckManager.DeckElements)(p.getActualCas().getType())))
         {
-            bool test = true;
-            do
-            {
-                int x = rnd.Next(0, GameManager.instance.getRows());
-                int y = rnd.Next(0, GameManager.instance.getCols());
-                Position po = new Position(x, y);
-                test = p.Move(po);
-            } while (test);
+            //Si no tienes la sala actual llamas a un sospechoso que no tengas
+            sos = call(p) ;
         }
-        else*/
+        else
         {
             //mueve a una que no tenga (preferiblemente con gente)
             //mueve
             DeckManager.DeckElements[] sol = checkOptions(p);
-            int sos, wep;
                 moveTo(p, sol[0]);
             if(sol[0] != sol[1])
             {
@@ -37,67 +30,41 @@ public class SmartIA : MonoBehaviour
                 List<Sospechoso> l =
                     GameManager.instance.IsSomeoneInMyPlace((GameManager.Place)sol[0]);
                 //ACUSAR A JUGADOR EN MAZO INICIAL
+
+
                 if (l.Count > 0)
                 {
-                    sos = l[0].getType() + (int)DeckManager.DeckElements.Terraza + 1;
+                    bool found = false;
+                    foreach(Sospechoso Sosp in l) //Miro si tengo alguno en mi lista inicial
+                    {
+                        if (p.GetSuspectList().getInitSuspetcs()[Sosp.getType()])
+                        {
+                            sos = Sosp.getType() + (int)DeckManager.DeckElements.Terraza + 1;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if(!found) //
+                        sos = l[0].getType() + (int)DeckManager.DeckElements.Terraza + 1;
 
                 }
                 else return;
             }
-                wep = chooseWeapon(p);
-            //acuse
-            GameManager.instance.makeAccusation((DeckManager.DeckElements) (sos), 1);
-            GameManager.instance.makeAccusation((DeckManager.DeckElements) wep, 2);
-
-            bool b = false;
-            GameManager.instance.showCard.text = this.gameObject.name + " suggests: " + (DeckManager.DeckElements)GameManager.instance.getPlayerActive().getActualCas().getType() + " " +
-                (DeckManager.DeckElements)sos + " " + (DeckManager.DeckElements)wep + " ";
-            GameManager.instance.Suggest(out b);
-            if (b) { GameManager.instance.Accuse(); }
         }
+        
+        //ELIGES ARMA
+        wep = chooseWeapon(p);
+        //acuse
+        GameManager.instance.makeAccusation((DeckManager.DeckElements)(sos), 1);
+        GameManager.instance.makeAccusation((DeckManager.DeckElements) wep, 2);
+
+        bool b = false;
+        GameManager.instance.showCard.text = this.gameObject.name + " suggests: " + (DeckManager.DeckElements)GameManager.instance.getPlayerActive().getActualCas().getType() + " " +
+            (DeckManager.DeckElements)sos + " " + (DeckManager.DeckElements)wep + " ";
+        GameManager.instance.Suggest(out b);
+        if (b) { GameManager.instance.Accuse(); }
     }
 
-    private void Suggest(Player p, System.Random rnd)
-    {
-        //sospechoso
-        List<Sospechoso> l = GameManager.instance.IsSomeoneInMyPlace(p.GetPlace());
-        bool found = false;
-        int i = 0;
-        Sospechoso s = null;
-        while (i < l.Count && !found)
-        {
-            if (!p.getMyCards().Contains((DeckManager.DeckElements)(l[i].getType() + (int)DeckManager.DeckElements.Terraza + 1)))
-            {
-                s = l[i];
-                found = true;
-            }
-
-            i++;
-        }
-
-        if (s != null) //si puede acusar a un sospechoso
-        {
-            //arma
-            int arma = -1;
-            do
-            {
-                arma = rnd.Next(0, 6);
-            } while (p.getMyCards().Contains((DeckManager.DeckElements)(arma + (int)DeckManager.DeckElements.Cnel_Rubio + 1)));
-
-            GameManager.instance.makeAccusation((DeckManager.DeckElements)(s.getType() + (int)GameManager.Place.Terraza + 1), 1);
-            GameManager.instance.makeAccusation((DeckManager.DeckElements)(arma + (int)DeckManager.DeckElements.Cnel_Rubio + 1), 2);
-            GameManager.instance.showCard.text = this.gameObject.name + " suggests: " + (DeckManager.DeckElements)GameManager.instance.getPlayerActive().getActualCas().getType() + " " +
-                (DeckManager.DeckElements)(s.getType() + (int)GameManager.Place.Terraza + 1) + " " + (DeckManager.DeckElements)(arma + (int)DeckManager.DeckElements.Cnel_Rubio + 1) + " ";
-            bool b = false;
-            GameManager.instance.Suggest(out b);
-            if (b) { GameManager.instance.Accuse(); }
-        }
-        else if (l.Count > 0)
-        {
-            //pasa turno
-            GameManager.instance.changeTurn(p.order);
-        }
-    }
 
     private DeckManager.DeckElements[] checkOptions(Player p)
     {

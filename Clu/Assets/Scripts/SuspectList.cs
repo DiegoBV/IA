@@ -6,10 +6,13 @@ public class SuspectList : MonoBehaviour {
 
     [HideInInspector]
     public bool[] suspetcs;
+    public bool[] initSuspetcs;
     [HideInInspector]
     public bool[] weapons;
+    public bool[] initWeapons;
     [HideInInspector]
     public bool[] rooms;
+    public bool[] initRooms;
 
     private int[] difElem_;
     private int numElem_;
@@ -20,22 +23,30 @@ public class SuspectList : MonoBehaviour {
         this.difElem_ = difElem;
 
         rooms = new bool[difElem_[0]];
-        suspetcs = new bool[difElem_[1]];
-        weapons = new bool[difElem_[2]];
+        initRooms = new bool[difElem_[0]];
 
-       for(int i = 0; i < deck.Count; i++)
+        suspetcs = new bool[difElem_[1]];
+        initSuspetcs = new bool[difElem_[1]];
+
+        weapons = new bool[difElem_[2]];
+        initWeapons = new bool[difElem_[2]];
+
+        for (int i = 0; i < deck.Count; i++)
         {
             if((int)deck[i] < difElem[0])
             {
                 rooms[(int)deck[i]] = true;
+                initRooms[(int)deck[i]] = true;
             }
             else if ((int)deck[i] < difElem[0] + difElem[1])
             {
                 suspetcs[(int)deck[i] - (int)difElem[0]] = true;
+                initSuspetcs[(int)deck[i] - (int)difElem[0]] = true;
             }
             else 
             {
                 weapons[(int)deck[i] - (int)difElem[0] - (int)difElem[1]] = true;
+                initWeapons[(int)deck[i] - (int)difElem[0] - (int)difElem[1]] = true;
             }
         }
     }
@@ -59,6 +70,7 @@ public class SuspectList : MonoBehaviour {
         }
 
     }
+
     public bool[] getSuspetcs()
     {
         return suspetcs;
@@ -70,6 +82,19 @@ public class SuspectList : MonoBehaviour {
     public bool[] getRooms()
     {
         return rooms;
+    }
+
+    public bool[] getInitSuspetcs()
+    {
+        return initSuspetcs;
+    }
+    public bool[] getInitWeapons()
+    {
+        return initWeapons;
+    }
+    public bool[] getIntiRooms()
+    {
+        return initRooms;
     }
 
 }
