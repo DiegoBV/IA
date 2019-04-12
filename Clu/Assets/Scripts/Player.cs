@@ -19,20 +19,27 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (UserControlled) {
-			Renderer rend = this.GetComponent<Renderer> ();
-			rend.enabled = true;
-			rend.material.SetColor("_Color", Color.black);
-		}
-
         discoveredCards = new List<DeckManager.DeckElements>();
     }
 
 	public void Initialize(){
-		if(UserControlled)
-			GameManager.instance.setPlayerActive (this);
+        Renderer rend = this.GetComponent<Renderer>();
+        rend.enabled = true;
+        if (UserControlled)
+        {
+            GameManager.instance.setPlayerActive(this);
+            rend.material.SetColor("_Color", Color.black);
+        }
+        else if(this.GetComponent<SmartIA>() != null)
+        {
+            rend.material.SetColor("_Color", Color.blue);
+        }
+        else
+        {
+            rend.material.SetColor("_Color", new Color(0.8F, 0.6F, 0.1F));
+        }
 
-		print ("Mi baraja: ");
+        print ("Mi baraja: ");
 		foreach (DeckManager.DeckElements element in myCards)
 			print (element);
 
@@ -40,6 +47,8 @@ public class Player : MonoBehaviour {
         //It Breaks here
         int[] array = new int[] { 9, 6, 6 }; //Temp
         GetComponent<SuspectList>().Initialize(myCards, 21, array);
+
+        eliminado = false;
 	}
 
     public SuspectList GetSuspectList()
@@ -111,32 +120,51 @@ public class Player : MonoBehaviour {
         bool canAccuse = true;
         foreach(DeckManager.DeckElements d in myCards)
         {
-            if(acc[0] == d && canAccuse)
+            if (this.GetSuspectList().total[(int)d])
             {
-                //comunicarle carta al jugador
-                p.addCard(d);
-                if (GameManager.instance.getPlayerActive().UserControlled)
-                    GameManager.instance.showCard.text = this.name + " showed you this card: \n \n" + d;
-                canAccuse = false;
+                if (acc[0] == d && canAccuse)
+                {
+                    //comunicarle carta al jugador
+                    p.addCard(d);
+                    if (GameManager.instance.getPlayerActive().UserControlled)
+                        GameManager.instance.showCard.text = this.name + " showed you this card: \n \n" + d;
+                    canAccuse = false;
+                }
+                else if (acc[1] == d && canAccuse)
+                {
+                    p.addCard(d);
+                    if (GameManager.instance.getPlayerActive().UserControlled)
+                        GameManager.instance.showCard.text = this.name + " showed you this card: \n \n" + d;
+                    canAccuse = false;
+                }
+                else if (acc[2] == d && canAccuse)
+                {
+                    p.addCard(d);
+                    if (GameManager.instance.getPlayerActive().UserControlled)
+                        GameManager.instance.showCard.text = this.name + " showed you this card: \n \n" + d;
+                    canAccuse = false;
+                }
             }
-            else if(acc[1] == d && canAccuse)
-            {
-                p.addCard(d);
-                if(GameManager.instance.getPlayerActive().UserControlled)
-                    GameManager.instance.showCard.text = this.name + " showed you this card: \n \n" + d;
-                canAccuse = false;
-            }
-            else if(acc[2] == d && canAccuse)
-            {
-                p.addCard(d);
-                if (GameManager.instance.getPlayerActive().UserControlled)
-                    GameManager.instance.showCard.text = this.name + " showed you this card: \n \n" + d;
-                canAccuse = false;
-            }
-
         }
 
         return canAccuse;
+    }
+
+    public void showEveryCard()
+    {
+        foreach(Player p in GameManager.instance.players)
+        {
+            if(p.gameObject != this.gameObject)
+            {
+                for(int i = 0; i < myCards.Count; i++)
+                {
+                    if (!this.GetSuspectList().total[i])
+                    {
+                        p.addCard(myCards[i]);
+                    }
+                }
+            }
+        }
     }
 
     private void BotBehaviour()

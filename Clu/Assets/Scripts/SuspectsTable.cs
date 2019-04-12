@@ -20,8 +20,6 @@ public class SuspectsTable : MonoBehaviour {
     public GameObject SpyLayer;
     bool spyFlag = true;
 
-    bool flag = false;
-
     public void initialize(Player p1, Player p2, Player p3)
     {
         p1_ = new bool[][] { p1.GetSuspectList().rooms, p1.GetSuspectList().suspetcs, p1.GetSuspectList().weapons };
@@ -89,9 +87,7 @@ public class SuspectsTable : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            
-            flag = !flag;
-            TheBigTable.SetActive(flag);
+            TheBigTable.SetActive(!TheBigTable.activeSelf);
         }
     }
 

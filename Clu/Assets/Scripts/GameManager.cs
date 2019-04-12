@@ -189,6 +189,20 @@ public class GameManager : MonoBehaviour {
 		players [nOrder].Activate ();
 
         turnText.text = "Active player: " + getPlayerActive().gameObject.name;
+        int i = 0;
+        foreach(Player p in players)
+        {
+            if (p.getEliminado())
+            {
+                i++;
+            }
+        }
+
+        if(i == players.GetLength(0) - 1)
+        {
+            showCard.text = getPlayerActive().name + " WINS!!!!";
+            Invoke("resetGame", 5);
+        }
     }
 
     private void resetAccusation()
@@ -248,7 +262,7 @@ public class GameManager : MonoBehaviour {
 
         while (i < players.Length && canAccuse)
         {
-            if (!players[i].isMyTurn())
+            if (!players[i].isMyTurn() && !players[i].getEliminado())
             {
                 canAccuse = players[i].checkSuggestion(this.acc, this.getPlayerActive());
             }
@@ -305,6 +319,7 @@ public class GameManager : MonoBehaviour {
         else
         {
             this.getPlayerActive().setEliminado(true);
+            this.getPlayerActive().showEveryCard();
             cancelModalDialog();
             GameManager.instance.changeTurn(getPlayerActive().order);
         }

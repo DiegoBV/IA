@@ -13,6 +13,7 @@ public class SuspectList : MonoBehaviour {
     [HideInInspector]
     public bool[] rooms;
     public bool[] initRooms;
+    public bool[] total;
 
     private int[] difElem_;
     private int numElem_;
@@ -31,6 +32,8 @@ public class SuspectList : MonoBehaviour {
         weapons = new bool[difElem_[2]];
         initWeapons = new bool[difElem_[2]];
 
+        total = new bool[difElem_[0] + difElem_[1] + difElem_[2]];
+
         for (int i = 0; i < deck.Count; i++)
         {
             if((int)deck[i] < difElem[0])
@@ -48,6 +51,8 @@ public class SuspectList : MonoBehaviour {
                 weapons[(int)deck[i] - (int)difElem[0] - (int)difElem[1]] = true;
                 initWeapons[(int)deck[i] - (int)difElem[0] - (int)difElem[1]] = true;
             }
+
+            total[(int)deck[i]] = true;
         }
     }
 
