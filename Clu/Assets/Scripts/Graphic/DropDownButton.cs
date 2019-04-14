@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+//clase para el menu desplegable
 [System.Serializable]
 public class DropDownMenuObject
 {
@@ -24,6 +25,8 @@ public class DropDownButton : MonoBehaviour
         this.Initialize();
     }
 
+    //inicializacion de cada uno de los botones del menu desplegable,
+    //atendiendo a su posicion y a su contenido
     void Initialize()
     {
         this.masterText.text = descriptor.masterText;

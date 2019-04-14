@@ -10,7 +10,8 @@ public class BlinkEffect : MonoBehaviour
     public DeckManager.DeckElements index;
 
     private Text text;
-    private bool started = false; //sorry
+    private bool started = false;
+
     // Use this for initialization
     void Awake()
     {
@@ -24,11 +25,13 @@ public class BlinkEffect : MonoBehaviour
 
     void OnEnable()
     {
+        //corrutina empezada 
         if (!started && !charac.getMyCards().Contains(index)) // lazy eval?
         {
             StartBlinking();
             started = true;
         }
+        //para la corrutina
         else if (charac.getMyCards().Contains(index))
         {
             StopBlinking();
@@ -39,6 +42,7 @@ public class BlinkEffect : MonoBehaviour
 
     IEnumerator Blink()
     {
+        //metodo de corrutina básico
         while (true)
         {
             switch (text.color.a.ToString())

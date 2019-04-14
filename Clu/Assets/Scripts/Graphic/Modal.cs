@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+//clase objeto de dialogo, util para tener diferentes modales en el juego
 [System.Serializable]
 public class DialogObject{
 	public string confText;
@@ -18,6 +19,7 @@ public class Modal : MonoBehaviour {
 	public Text confText;
 	public Text canText;
 
+	//set de los parametros del modal
 	public void setDialog(DialogObject dialog) 
 	{
 		generalText.text = dialog.genText;

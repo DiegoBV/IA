@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Model;
 
+/*
+Clase casilla, se ocupa de la parte visual de cada casilla del tablero y de la interaccion con el usuario (click).
+ */
 public class Casilla : MonoBehaviour {
 
 	private Position position; //posicion en el tablero
@@ -27,6 +30,7 @@ public class Casilla : MonoBehaviour {
 		setPosition (p);
 	}
 
+	//el usuario se mueve a esta casilla si hace click en ella y esta libre
 	public bool OnMouseUpAsButton(){
         if (GameManager.instance.CanInteract())
         {
@@ -37,6 +41,8 @@ public class Casilla : MonoBehaviour {
 		return true;
 	}
 
+	//sets y gets
+	
 	public void setPosition(Position p) {
 		position = p;
 	}

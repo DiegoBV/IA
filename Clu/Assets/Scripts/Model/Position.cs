@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+/*
+clase posicion, util para las casillas del tablero
+ */
 namespace Model
 {
     public class Position

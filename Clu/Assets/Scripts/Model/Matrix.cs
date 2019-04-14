@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System;
 
+/*
+Clase matrix, almacena una matriz de dos dimensiones de las dimensiones
+elegidas al construirla. Se puede iniciar a un valor por defecto
+o a valores aleatorios no repetidos.
+ */
 namespace Model
 {
     public class Matrix
@@ -50,7 +55,8 @@ namespace Model
             }
         }
 
-            public int getRows() { return rows; }
+        //gets, sets, operador [,]
+        public int getRows() { return rows; }
         public int getCols() { return cols; }
 
 		public int this[int k1, int k2]{

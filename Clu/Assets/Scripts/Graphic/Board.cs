@@ -4,6 +4,9 @@ using UnityEngine;
 using System;
 using Model;
 
+/*
+clase tablero, inicializa todas las casillas correspondientes
+ */
 public class Board : MonoBehaviour {
 
     private Matrix matriz;
@@ -15,6 +18,7 @@ public class Board : MonoBehaviour {
 	private int cols;
 	System.Random rnd;
 
+	//init de la matriz, casillas, etc
     public void Initialize(GameManager manager)
     {
 		DestroyBoard ();
@@ -29,6 +33,7 @@ public class Board : MonoBehaviour {
 		GenerateCharacters ();
     }
 
+	//genera el tablero y le asigna el tipo correspondiente a cada casilla
     void GenerateBoard()
     {
 		tablero = new Casilla[rows*rows, cols*cols];
@@ -46,6 +51,7 @@ public class Board : MonoBehaviour {
         }
     }
 
+	//devuelve una casilla libre
 	Casilla getNoOcupCasilla(){
 		int k1 = 0;
 		int k2 = 0;
@@ -60,6 +66,7 @@ public class Board : MonoBehaviour {
 		return cas;
 	}
 
+	//genera y coloca los sospechosos y los jugadores en posiciones aleatorias y libres
 	void GenerateCharacters()
 	{
 		sospechosos = new GameObject[GameManager.instance.sospechososPrefab.GetLength (0)];
@@ -105,6 +112,7 @@ public class Board : MonoBehaviour {
 		}
 	}
 
+	//gets
 	public Casilla this[int k1, int k2]{
 		get{
 			return tablero [k1, k2];

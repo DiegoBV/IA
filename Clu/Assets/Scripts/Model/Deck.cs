@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+Clase deck, maneja la parte logica de la baraja, COMO YA HA SIDO EXPLICADO EN LA MEMORIA DE LA PRACTICA.
+ */
 namespace Model {
 	public class Deck {
 
@@ -21,7 +23,9 @@ namespace Model {
 			this.difElem_ = difElem;
 		}
 
-		private List<int> ChooseSolution () { //la baraja tiene q estar ordenada por categorias para que este metodo funcione
+		//la baraja tiene q estar ordenada por categorias para que este metodo funcione. De la baraja ordenada, coge
+		//3 elementos diferentes y consigue la solucion
+		private List<int> ChooseSolution () {
 			List<int> newSol = new List<int> ();
 			int prevElem = 0;
 			for (int i = 0; i < this.difElem_.GetLength (0); i++) {
@@ -33,6 +37,7 @@ namespace Model {
 			return newSol;
 		}
 
+		//rellena con numeros
 		private void FillDeck () {
 			deck_ = new List<int> ();
 			for (int i = 0; i < this.numElem_; i++) {
@@ -40,6 +45,7 @@ namespace Model {
 			}
 		}
 
+		//barajar la deck
 		private void Shuffle () {
 			for (int i = 0; i < this.deck_.Count; i++) {
 				int rand = i + GameManager.instance.getRandomSeed ().Next (0, this.deck_.Count - i);
@@ -50,6 +56,7 @@ namespace Model {
 			}
 		}
 
+		//devuelve la primera carta y la elimina de la baraja
 		public int PickCard () {
 			if (this.deck_.Count > 0) {
 				int card = this.deck_[0];
@@ -59,7 +66,9 @@ namespace Model {
 				return -1;
 			}
 		}
-
+		
+		//metodos auxiliares
+		
 		private void Swap (int x, int y) {
 			int temp = x;
 			x = y;

@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Model;
 
+/*
+Manager de la baraja, almacena un enumerado con todos los tipos
+posibles de la baraja. Crea la parte logica de la misma, como su 
+division entre tipos, tamanyo maximo y conseguir la solucion.
+ */
 public class DeckManager : MonoBehaviour {
 	private Deck deck_;
 	public int totalElements;
@@ -30,7 +35,7 @@ public class DeckManager : MonoBehaviour {
 		return this.solution;
 	}
 
-	public void Deal(){  //deal "cardperplayer" cards
+	public void Deal(){  //reparte "cardperplayer" cartas
 		for (int i = 0; i < GameManager.instance.players.GetLength (0); i++) {
 			List<DeckElements> l = new List<DeckElements> ();
 			for (int j = 0; j < cardsPerPlayer; j++) {

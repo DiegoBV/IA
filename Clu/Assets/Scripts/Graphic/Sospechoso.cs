@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+Clase sospechoso, tiene toda la funcionalidad especificada en el enunciado, como ser llamado a una sala 
+o ser clickado por el usuario humano
+ */
 public class Sospechoso : MonoBehaviour {
 
 	private int typeCasilla; //casilla sobre la que se encuentra
@@ -14,7 +18,7 @@ public class Sospechoso : MonoBehaviour {
 	public Casilla getActualCas(){
 		return this.actualCas;
 	}
-
+	//click por el usuario
 	public bool OnMouseUpAsButton () {
 		Accuse ();
         if(GameManager.instance.getPlayerActive().UserControlled)
@@ -22,6 +26,7 @@ public class Sospechoso : MonoBehaviour {
 		return true;
 	}
 
+	//se mueve a una casilla random de la sala en la que se encuentra el jugador que le llama.
 	public void CallSuspect () {
 		if (GameManager.instance.CanInteract ()) {
 			Player playerActive = GameManager.instance.getPlayerActive ();
