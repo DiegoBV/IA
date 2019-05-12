@@ -6,20 +6,12 @@ public class Goal : MonoBehaviour {
 
     public int TeamOwner;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.name == "Ball")
         {
-            GameManager.goal(TeamOwner);
+            GameManager.instanciar().goal(TeamOwner); 
         }
     }
 }
