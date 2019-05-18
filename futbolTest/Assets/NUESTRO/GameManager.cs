@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour {
         scores[team]++;
         print("Team: " + team + " scored a goal");
 
-        ball.transform.position = new Vector3(-7, 15, -12);
+        ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        ball.transform.position = new Vector3(-7, 12, -12);
     }
 }
