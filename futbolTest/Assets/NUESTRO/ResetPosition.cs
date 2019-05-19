@@ -17,8 +17,7 @@ public class ResetPosition : MonoBehaviour {
     {
         this.transform.position = init_position;
 
-        if (rb != null){
-
+        if (rb != null) {
             rb.velocity = Vector3.zero;
         }
     }
