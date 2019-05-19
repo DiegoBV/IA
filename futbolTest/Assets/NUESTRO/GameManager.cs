@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-
-
     public static GameManager instance = null;
-    public GameObject ball;
+    public GameObject[] entities;
+    public Text score;
+
     /*
         public GameObject NorthGoal;
         public GameObject SouthGoal;
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         instance = this;
+        score.text = scores[0] + " - " + scores[1];
     }
 
     public static GameManager instanciar()
@@ -33,8 +35,18 @@ public class GameManager : MonoBehaviour {
     {
         scores[team]++;
         print("Team: " + team + " scored a goal");
+        score.text = scores[0] + " - " + scores[1];
 
-        ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        ball.transform.position = new Vector3(-7, 12, -12);
+        foreach(GameObject g in entities)
+        {
+            ResetPosition rp = g.GetComponent<ResetPosition>();
+
+            if(rp != null) {
+                rp.reset();
+            }
+        }
+
+        //ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        //ball.transform.position = new Vector3(-7, 12, -12);
     }
 }

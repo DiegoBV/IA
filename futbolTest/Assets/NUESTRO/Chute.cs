@@ -28,11 +28,16 @@ namespace BehaviorDesigner.Samples
 
         public override TaskStatus OnUpdate()
         {
-            Vector3 pos = pase_position.transform.position - target.transform.position;
-            pos.Normalize();
+            Vector3 dist = target.transform.position - this.gameObject.transform.position;
 
+            //check distance between target and player
+            if (dist.sqrMagnitude < 1.5f){
+                Vector3 pos = pase_position.transform.position - target.transform.position;
+                pos.Normalize();
 
-            target.GetComponent<Rigidbody>().AddForce(pos * force);
+                target.GetComponent<Rigidbody>().AddForce(pos * force);
+            }
+            
             return TaskStatus.Success;
         }
     }
