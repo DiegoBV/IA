@@ -31,21 +31,36 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
+    public void reset()
+    {
+        scores[0] = 0;
+        scores[1] = 0;
+
+        score.text = scores[0] + " - " + scores[1];
+
+        resetGameObjects();
+    }
+
+    private void resetGameObjects()
+    {
+        foreach (GameObject g in entities)
+        {
+            ResetPosition rp = g.GetComponent<ResetPosition>();
+
+            if (rp != null)
+            {
+                rp.reset();
+            }
+        }
+    }
+
     public void goal(int team)
     {
         scores[team]++;
         print("Team: " + team + " scored a goal");
         score.text = scores[0] + " - " + scores[1];
 
-        foreach(GameObject g in entities)
-        {
-            ResetPosition rp = g.GetComponent<ResetPosition>();
-
-            if(rp != null) {
-                rp.reset();
-            }
-        }
-
+        resetGameObjects();
         //ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
         //ball.transform.position = new Vector3(-7, 12, -12);
     }

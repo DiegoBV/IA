@@ -31,7 +31,7 @@ namespace BehaviorDesigner.Samples
             Vector3 dist = target.transform.position - this.gameObject.transform.position;
 
             //check distance between target and player
-            if (dist.sqrMagnitude < 1.5f){
+            if (dist.sqrMagnitude < 2){
                 Vector3 pos = pase_position.transform.position - target.transform.position;
                 pos.Normalize();
 
