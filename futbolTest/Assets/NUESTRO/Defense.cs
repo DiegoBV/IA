@@ -20,7 +20,7 @@
         public bool side;
 
         public override TaskStatus OnUpdate(){
-            //Saber si estas a mitad de campo
+            //Pelota en campo contrario
             if (side) {
                 if(target.transform.position.z >= -12)
                 {
