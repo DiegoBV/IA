@@ -105,7 +105,7 @@ namespace BehaviorDesigner.Samples {
                 // Falla si el objetivo se mueve demasiado deprisa en un sólo fotograma. Esto ocurre cuando el objetivo ha sido capturado y regenerado en otra parte
                 float distance;
                 if (prevMagnitude * 2 < (distance = Vector3.SqrMagnitude(thisPosition - targetPosition))) {
-                    return TaskStatus.Failure;
+                    return TaskStatus.Success;
                 }
                 prevMagnitude = distance;
             }

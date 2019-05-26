@@ -20,12 +20,21 @@
 
         public override TaskStatus OnUpdate()
         {
-            Vector3 pos = target.transform.position - DefTarget.transform.position;
+            if(target.transform.position.x > -3)
+            {
+                Flag.transform.position = new Vector3(-3, Flag.transform.position.y, Flag.transform.position.z);
+            }
+            else if(target.transform.position.x < -13)
+            {
+                Flag.transform.position = new Vector3(-13, Flag.transform.position.y, Flag.transform.position.z);
+            }
+            else
+            {
+                Flag.transform.position = new Vector3(target.transform.position.x, Flag.transform.position.y, Flag.transform.position.z);
+            }
 
-            pos.Normalize();
-
-            Flag.transform.position = DefTarget.transform.position + pos * 2;
-            //Flag.transform.position.y = 8.5;
+            //Vector3 pos = target.transform.position - DefTarget.transform.position;
+            //pos.Normalize();
 
             return TaskStatus.Success;
         }
