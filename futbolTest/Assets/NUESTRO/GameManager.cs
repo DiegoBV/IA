@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int[] scores = { 0, 0 };
     private BehaviorTree blueTeamManager_tree;
     private AudioSource sc;
+    bool ispaused = false;
 
     /*
         public GameObject NorthGoal;
@@ -41,15 +42,18 @@ public class GameManager : MonoBehaviour
 
     public void reset()
     {
-        scores[0] = 0;
-        scores[1] = 0;
+        if (!ispaused)
+        {
+            scores[0] = 0;
+            scores[1] = 0;
 
-        score.text = scores[0] + " - " + scores[1];
+            score.text = scores[0] + " - " + scores[1];
 
-        resetGameObjects();
+            resetGameObjects();
 
-        blueTeamManager_tree.enabled = false;
-        blueTeamManager_tree.enabled = true;
+            blueTeamManager_tree.enabled = false;
+            blueTeamManager_tree.enabled = true;
+        }
     }
 
     private void resetGameObjects()
@@ -84,6 +88,8 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        ispaused = !ispaused;
     }
 
     void ResetRound()
@@ -100,6 +106,11 @@ public class GameManager : MonoBehaviour
         resetGameObjects();
         blueTeamManager_tree.enabled = false;
         blueTeamManager_tree.enabled = true;
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     public void goal(int team)
