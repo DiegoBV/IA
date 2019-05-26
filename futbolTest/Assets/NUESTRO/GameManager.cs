@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour {
         public GameObject NorthGoal;
         public GameObject SouthGoal;
     */
-    int[] scores = { 0, 0 };
+    [HideInInspector]
+    public int[] scores = { 0, 0 };
 
     // Use this for initialization
     void Awake()
