@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public int[] scores = { 0, 0 };
     private BehaviorTree blueTeamManager_tree;
+    private AudioSource sc;
 
     /*
         public GameObject NorthGoal;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         score.text = scores[0] + " - " + scores[1];
         blueTeamManager_tree = blueTeamManager.GetComponent<BehaviorTree>();
+        sc = GetComponent<AudioSource>();
     }
 
     public static GameManager instanciar()
@@ -65,7 +67,39 @@ public class GameManager : MonoBehaviour
 
     public void pauseGame()
     {
+        foreach (GameObject g in entities)
+        {
+            BehaviorTree bt = g.GetComponent<BehaviorTree>();
 
+            if(bt != null)
+            {
+                bt.enabled = !bt.enabled;
+            }
+            else
+            {
+                Rigidbody rb = g.GetComponent<Rigidbody>();
+                if(rb != null)
+                {
+                    rb.isKinematic = !rb.isKinematic;
+                }
+            }
+        }
+    }
+
+    void ResetRound()
+    {
+        pauseGame();
+        foreach (GameObject g in entities)
+        {
+            CelebrateJump j = g.GetComponent<CelebrateJump>();
+            if (j != null)
+            {
+                j.enabled = false;
+            }
+        }
+        resetGameObjects();
+        blueTeamManager_tree.enabled = false;
+        blueTeamManager_tree.enabled = true;
     }
 
     public void goal(int team)
@@ -74,9 +108,23 @@ public class GameManager : MonoBehaviour
         print("Team: " + team + " scored a goal");
         score.text = scores[0] + " - " + scores[1];
 
-        resetGameObjects();
-        blueTeamManager_tree.enabled = false;
-        blueTeamManager_tree.enabled = true;
+//        resetGameObjects();
+       
+
+        //pausa
+        pauseGame();
+        //activar celebrar
+        foreach(GameObject g in entities)
+        {
+            CelebrateJump j = g.GetComponent<CelebrateJump>();
+            if(j != null && team.ToString() == g.tag)
+            {
+                j.enabled = true;
+            }
+        }
+        //invoke
+        Invoke("ResetRound", 3f);
+        sc.Play();
         //ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
         //ball.transform.position = new Vector3(-7, 12, -12);
     }
