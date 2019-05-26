@@ -8,8 +8,6 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance = null;
     public GameObject[] entities;
     public Text score;
-    public GameObject blueManager;
-    private BlueManagerComponent bmc;
 
     /*
         public GameObject NorthGoal;
@@ -22,7 +20,6 @@ public class GameManager : MonoBehaviour {
     {
         instance = this;
         score.text = scores[0] + " - " + scores[1];
-        bmc = blueManager.GetComponent<BlueManagerComponent>();
     }
 
     public static GameManager instanciar()
@@ -64,7 +61,6 @@ public class GameManager : MonoBehaviour {
         score.text = scores[0] + " - " + scores[1];
 
         resetGameObjects();
-        bmc.JustScored(scores[1], scores[0]);
         //ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
         //ball.transform.position = new Vector3(-7, 12, -12);
     }
